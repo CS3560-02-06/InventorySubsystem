@@ -1,6 +1,14 @@
+import java.sql.Date;
+
 public class InventoryItem
 {
    int productID;
-   String brand;
-   String decription;
+   int inventoryID;
+   double price;
+   int amountInStock;
+   double size;
+   String color;
+   Date receiptDate;
+   Date expirationDate;
+   String location;
 }
