@@ -27,8 +27,9 @@ public class InventoryManager
    /**
     * Adds a new InventoryItem to the database.
     * @param newItem The new item to add.
+    * @param productID The ID of the product this item is a part of.
     */
-   static void AddInventoryItem(InventoryItem newItem, ProductItem product)
+   static void AddInventoryItem(InventoryItem newItem, int productID)
    {
 
    }
@@ -53,8 +54,6 @@ public class InventoryManager
    }
    /**
     * Formats an request for more stock and sends it to a supplier.
-    * @param ID The ID of the InventoryItem to update.
-    * @param newItem an InventoryItem holding the updated information.
     */
    static void OrderMoreStock()
    {
