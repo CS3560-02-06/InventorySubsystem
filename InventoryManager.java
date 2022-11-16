@@ -1,5 +1,24 @@
-public class InventoryManager
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.*;
+
+public class InventoryManager extends Application
 {
+   public static void main( String[] args ){
+      launch();
+   }
+
+   @Override
+   public void start(Stage stage) throws Exception {
+      File f = new File("guitest.fxml");
+      Parent root  = FXMLLoader.load(f.toURI().toURL());
+
+      stage.setScene(new Scene(root));
+      stage.show();
+   }
    /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
