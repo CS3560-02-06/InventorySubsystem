@@ -12,12 +12,13 @@ public class InventoryManager extends Application
    }
 
    @Override
-   public void start(Stage stage) throws Exception {
+   public void start(Stage primaryStage) throws Exception {
       File f = new File("guitest.fxml");
       Parent root  = FXMLLoader.load(f.toURI().toURL());
 
-      stage.setScene(new Scene(root));
-      stage.show();
+      primaryStage.setScene(new Scene(root));
+      primaryStage.setTitle("Inventory");
+      primaryStage.show();
    }
    /**
     * Adds a new ProductItem to the database.
