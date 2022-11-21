@@ -32,15 +32,17 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchProductController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -65,8 +67,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Search">
                <items>
-                  <MenuItem fx:id="searchProduct" mnemonicParsing="false" text="Search product" />
-                  <MenuItem fx:id="searchInventory" mnemonicParsing="false" text="Search inventory item" />
+                  <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Search product" />
+                  <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Search inventory item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help" />
@@ -74,11 +76,32 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="183.0" layoutY="131.0" prefHeight="111.0" prefWidth="273.0" style="&#10;" text="Welcome" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+        <Label alignment="CENTER" layoutX="183.0" layoutY="-13.0" prefHeight="111.0" prefWidth="273.0" style="&#10;" text="Search Product Item" textAlignment="CENTER" wrapText="false">
           <font>
-            <Font size="50.0" />
+            <Font size="24.0" />
           </font>
         </Label>
+            <Label layoutX="29.0" layoutY="64.0" text="Product ID">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="172.0" text="Product Name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField layoutX="29.0" layoutY="104.0" promptText="Enter product ID" />
+            <TextField layoutX="30.0" layoutY="211.0" promptText="Enter product name" />
+            <Button fx:id="searchProductButton" layoutX="144.0" layoutY="282.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="122.0" style="-fx-background-color: skyblue;" text="Search" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+            <Button fx:id="cancelButton" layoutX="381.0" layoutY="282.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="122.0" style="-fx-background-color: gray;" text="Cancel" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
       </children>
     </AnchorPane>
   </children>
