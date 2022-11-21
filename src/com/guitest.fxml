@@ -47,7 +47,7 @@
         <Menu mnemonicParsing="false" text="Overall" />
         <Menu mnemonicParsing="false" text="Add">
                <items>
-                  <MenuItem fx:id="addProduct" mnemonicParsing="false" text="Add new product" />
+                  <MenuItem fx:id="addProduct" mnemonicParsing="false" onAction="#SelectAddProduct" text="Add new product" />
                   <MenuItem fx:id="addInventory" mnemonicParsing="false" text="Add new inventory item" />
                </items>
         </Menu>
