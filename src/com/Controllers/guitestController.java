@@ -11,6 +11,8 @@ import javafx.scene.control.MenuItem;
 public class guitestController {
 
     @FXML
+    private MenuItem addProduct;
+    @FXML
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
@@ -19,6 +21,11 @@ public class guitestController {
 
     }
 
+    public void SelectAddProduct(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/addnewproduct.fxml");
+    }
+    
     public void SelectSearchProduct(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchProduct.fxml");
