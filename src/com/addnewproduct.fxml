@@ -11,51 +11,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddProductController">
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
-            <Menu mnemonicParsing="false" text="Overall">
+        <Menu mnemonicParsing="false" text="Overall" />
+        <Menu mnemonicParsing="false" text="Add">
                <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Open…" />
-                  <Menu mnemonicParsing="false" text="Open Recent" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Save As…" />
-                  <MenuItem mnemonicParsing="false" text="Revert" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Preferences…" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
+                  <MenuItem fx:id="addProduct" mnemonicParsing="false" onAction="#SelectAddProduct" text="Add new product" />
+                  <MenuItem fx:id="addInventory" mnemonicParsing="false" text="Add new inventory item" />
                </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Add">
+        </Menu>
+        <Menu mnemonicParsing="false" text="Update">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Add a new product item" />
-                  <MenuItem mnemonicParsing="false" text="Add a new inventory item" />
+                  <MenuItem fx:id="updateProduct" mnemonicParsing="false" text="Update product information" />
+                  <MenuItem fx:id="updateInventory" mnemonicParsing="false" text="Update inventory information" />
                </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Update">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Update a product item" />
-                  <MenuItem mnemonicParsing="false" text="Update a inventory item" />
-               </items>
-            </Menu>
+        </Menu>
             <Menu mnemonicParsing="false" text="Remove">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Remove a product item" />
-                  <MenuItem mnemonicParsing="false" text="Remove a inventory item" />
+                  <MenuItem fx:id="removeProduct" mnemonicParsing="false" text="Remove product" />
+                  <MenuItem fx:id="removeInventory" mnemonicParsing="false" text="Remove inventory item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Search">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Search Product Item" />
-                  <MenuItem mnemonicParsing="false" text="Search Inventory Item" />
+                  <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Search product" />
+                  <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Search inventory item" />
                </items>
             </Menu>
-         </menus>
+            <Menu mnemonicParsing="false" text="Help" />
+      </menus>
       </MenuBar>
       <AnchorPane prefHeight="383.0" prefWidth="600.0">
          <children>
