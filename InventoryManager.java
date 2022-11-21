@@ -4,15 +4,134 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.*;
+import java.sql.*;
+import java.util.*;
 
 public class InventoryManager extends Application
 {
+   String url = "jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM";
+   static String userName = "root";
+   static String password = "3560";
+   static String portNumber = "3306";
+   static String serverName = "localhost";
+   static String dbms = "mysql";
+   static String dbName = "INVENTORY_SUBSYSTEM";
    public static void main( String[] args ){
-      launch();
+      Connection myConnection = null;
+      try {
+         myConnection = getConnection();
+         //runUpdateSqlScript("Queries/createDatabase.sql", myConnection);
+         //runUpdateSqlScript("Queries/use.sql", myConnection);
+         //runUpdateSqlScript("Queries/createTables.sql", myConnection);
+         //runUpdateSqlScript("Queries/insertValues.sql", myConnection);
+         runSqlScript("Queries/select.sql", myConnection);
+         launch();
+       } catch (SQLException e) {
+         e.printStackTrace(System.err);
+       } catch (Exception e) {
+         e.printStackTrace(System.err);
+       } finally {
+         closeConnection(myConnection);
+       }
    }
 
+   /**
+   * Opens a new connection to a database.
+   */
+   public static Connection getConnection() throws SQLException {
+      Connection conn = null;
+      Properties connectionProps = new Properties();
+      connectionProps.put("user", userName);
+      connectionProps.put("password", password);
+      connectionProps.put("dbName", dbName);
+  
+      conn = DriverManager.getConnection(
+         "jdbc:" + dbms + "://" +
+         serverName +
+         ":" + portNumber + "/",
+         connectionProps);
+      System.out.println("Connected to database");
+      return conn;
+   }
+   /**
+   * Closes a connection to a database.
+   * @param connArg The connection to close.
+   */
+   public static void closeConnection(Connection connArg) {
+      System.out.println("Releasing all open resources ...");
+      try {
+         if (connArg != null) {
+            connArg.close();
+            connArg = null;
+         }
+      }
+      catch (SQLException sqle) {
+         sqle.printStackTrace(System.err);
+      }
+   }
+
+   /**
+    * Reads and executes a .sql script file for update functions.
+    * @param fileName The name of the input file.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+    public static void runUpdateSqlScript(String fileName, Connection con) throws IOException, SQLException
+    {
+       Statement statement = con.createStatement();
+       File file = new File(fileName);
+       if (!file.exists())
+       {
+          System.out.println("file not found.");
+          System.exit(0);
+       }
+       Scanner inputFile = new Scanner(file);
+       while (inputFile.hasNextLine())
+       {
+         String query = inputFile.nextLine();
+         statement.executeUpdate(query);
+       }
+       System.out.println("Query sucessfully read!");
+       inputFile.close();
+    }
+
+   /**
+    * Reads and executes a .sql script file.
+    * @param fileName The name of the input file.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+    public static void runSqlScript(String fileName, Connection con) throws IOException, SQLException
+    {
+       Statement statement = con.createStatement();
+       File file = new File(fileName);
+       if (!file.exists())
+       {
+          System.out.println("file not found.");
+          System.exit(0);
+       }
+       Scanner inputFile = new Scanner(file);
+       while (inputFile.hasNextLine())
+       {
+         String query = inputFile.nextLine();
+         ResultSet result = statement.executeQuery(query);
+         ResultSetMetaData rsmd = result.getMetaData();
+         int cols = rsmd.getColumnCount();
+         while(result.next())
+         {
+            for (int i = 1; i <= cols; ++i)
+            {
+               System.out.print(result.getString(i) + " : ");
+            }
+            System.out.println();
+         }
+      }
+      System.out.println("Query sucessfully read!");
+      inputFile.close();
+    }
+
    @Override
-   public void start(Stage primaryStage) throws Exception {
+   public void start(Stage primaryStage) throws SQLException, Exception {
       File f = new File("guitest.fxml");
       Parent root  = FXMLLoader.load(f.toURI().toURL());
 
@@ -26,6 +145,7 @@ public class InventoryManager extends Application
     */
    static void AddProductItem(ProductItem newItem)
    {
+
    }
    /**
     * Removes an existing ProductItem from the database.
