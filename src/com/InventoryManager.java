@@ -169,8 +169,8 @@ public class InventoryManager extends Application
          conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
          stmt = conn.createStatement();
 
-         String sql = "INSERT INTO product_items" + "VALUES (" + newItem.productID + ", " + newItem.name + ", " + newItem.categoryID + ", " + 
-         newItem.brandID + ", " + newItem.description + ")";
+         String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
+         newItem.brandID + ", '" + newItem.description + "')";
 
          stmt.executeUpdate(sql);
          
