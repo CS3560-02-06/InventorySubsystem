@@ -9,12 +9,12 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.*;
+// import javafx.application.Application;
+// import javafx.fxml.FXMLLoader;
+// import javafx.scene.Parent;
+// import javafx.scene.Scene;
+// import javafx.stage.Stage;
+// import java.io.*;
 
 public class InventoryManager extends Application
 {
@@ -162,7 +162,39 @@ public class InventoryManager extends Application
     */
    static void AddProductItem(ProductItem newItem) throws SQLException
    {
+      Connection conn = null;
+      Statement stmt = null;
 
+      try{
+         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
+         stmt = conn.createStatement();
+
+         String sql = "INSERT INTO product_items" + "VALUES (" + newItem.productID + ", " + newItem.name + ", " + newItem.categoryID + ", " + 
+         newItem.brandID + ", " + newItem.description + ")";
+
+         stmt.executeUpdate(sql);
+         
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }finally {
+         try {
+            if(stmt != null){
+               conn.close();
+            }
+         }catch(SQLException se) {
+
+         }
+
+         try{
+            if(conn != null){
+               conn.close();
+            }
+         }catch(SQLException se){
+            se.printStackTrace();
+         }
+      }
    }
    /**
     * Removes an existing ProductItem from the database.
