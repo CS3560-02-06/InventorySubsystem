@@ -9,13 +9,6 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.*;
-
 public class InventoryManager extends Application
 {
    private static Stage stg;
@@ -31,11 +24,27 @@ public class InventoryManager extends Application
    public static void main( String[] args ){
       try {
          con = getConnection();
-         //runUpdateSqlScript("Queries/createDatabase.sql", myConnection);
-         //runUpdateSqlScript("Queries/use.sql", myConnection);
-         //runUpdateSqlScript("Queries/createTables.sql", myConnection);
-         //runUpdateSqlScript("Queries/insertValues.sql", myConnection);
+         
+         runUpdateSqlQuery("DROP DATABASE IF EXISTS `INVENTORY_SUBSYSTEM`");
+         runUpdateSqlQuery("CREATE DATABASE `INVENTORY_SUBSYSTEM`");
+         runUpdateSqlQuery("USE `INVENTORY_SUBSYSTEM`");
+         
+         runUpdateSqlScript("src/com/Queries/createTables.sql");
+         runUpdateSqlScript("src/com/Queries/insertValues.sql");
          //runSqlScript("Queries/select.sql");
+
+         //Test
+         String[][] res = runSqlQuery("SELECT * FROM `suppliers`");
+         //Test
+
+         for(int i = 0; i < res.length; ++i)
+         {
+            for(int j = 0; j < res[i].length; ++j)
+            {
+               System.out.print(res[i][j]);
+            }
+            System.out.println();
+         }
          launch();
        } catch (SQLException e) {
          e.printStackTrace(System.err);
@@ -103,24 +112,24 @@ public class InventoryManager extends Application
     * @throws IOException Throws if an error occurs while reading or writing data.
     * @throws SQLException Throws if an error occurs while executing SQL operations.
     */
-    public static void runUpdateSqlScript(String fileName) throws IOException, SQLException
-    {
-       Statement statement = con.createStatement();
-       File file = new File(fileName);
-       if (!file.exists())
-       {
-          System.out.println("file not found.");
-          System.exit(0);
-       }
-       Scanner inputFile = new Scanner(file);
-       while (inputFile.hasNextLine())
-       {
+   public static void runUpdateSqlScript(String fileName) throws IOException, SQLException
+   {
+      Statement statement = con.createStatement();
+      File file = new File(fileName);
+      if (!file.exists())
+      {
+         System.out.println("file not found.");
+         System.exit(0);
+      }
+      Scanner inputFile = new Scanner(file);
+      while (inputFile.hasNextLine())
+      {
          String query = inputFile.nextLine();
          statement.executeUpdate(query);
-       }
-       System.out.println("Query sucessfully read!");
-       inputFile.close();
-    }
+      }
+      System.out.println("Query sucessfully read!");
+      inputFile.close();
+   }
 
    /**
     * Reads and executes a .sql script file.
@@ -128,18 +137,18 @@ public class InventoryManager extends Application
     * @throws IOException Throws if an error occurs while reading or writing data.
     * @throws SQLException Throws if an error occurs while executing SQL operations.
     */
-    public static void runSqlScript(String fileName) throws IOException, SQLException
-    {
-       Statement statement = con.createStatement();
-       File file = new File(fileName);
-       if (!file.exists())
-       {
-          System.out.println("file not found.");
-          System.exit(0);
-       }
-       Scanner inputFile = new Scanner(file);
-       while (inputFile.hasNextLine())
-       {
+   public static void runSqlScript(String fileName) throws IOException, SQLException
+   {
+      Statement statement = con.createStatement();
+      File file = new File(fileName);
+      if (!file.exists())
+      {
+         System.out.println("file not found.");
+         System.exit(0);
+      }
+      Scanner inputFile = new Scanner(file);
+      while (inputFile.hasNextLine())
+      {
          String query = inputFile.nextLine();
          ResultSet result = statement.executeQuery(query);
          ResultSetMetaData rsmd = result.getMetaData();
@@ -155,14 +164,53 @@ public class InventoryManager extends Application
       }
       System.out.println("Query sucessfully read!");
       inputFile.close();
-    }
+   }
+   /**
+    * Executes an update sql query.
+    * @param query The query to execute.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+   public static void runUpdateSqlQuery(String query) throws SQLException
+   {
+      Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      statement.executeUpdate(query);
+   }
+   /**
+    * Executes a sql query.
+    * @param query The query to execute.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+   public static String[][] runSqlQuery(String query) throws SQLException
+   {
+      Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      ResultSet result = statement.executeQuery(query);
+      ResultSetMetaData rsmd = result.getMetaData();
+
+      result.last();
+      int rows = result.getRow();
+      result.beforeFirst();
+      int cols = rsmd.getColumnCount();
+      String[][] finalSet = new String[rows][cols];
+      int currRow = 0;
+      result.next();
+      while(result.next())
+      {
+         for (int i = 0; i < cols; ++i)
+         {
+            finalSet[currRow][i] = result.getString(i+1);
+         }
+         ++currRow;
+      }
+      return finalSet;
+   }
    /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
     */
    static void AddProductItem(ProductItem newItem) throws SQLException
    {
-
    }
    /**
     * Removes an existing ProductItem from the database.

@@ -88,7 +88,6 @@ INSERT INTO `locations` VALUES
 # Dummy-dummy data (remove this when we actually make the adding items part work)
 */
 
-
 INSERT INTO `product_items` VALUES
    (1, "Running Shoes", 1, 2, "Features cooling meshes and shock-absorbing soles. High drip factor."),
    (2, "SUPREME Jacket", 1, 1, "Polymer lining."),
@@ -113,9 +112,10 @@ INSERT INTO `inventory_items` VALUES
 # Show tables
 */
 
+
+SELECT COUNT(*) AS RECORDCOUNT;
 SELECT * FROM `product_items`;
 SELECT * FROM `inventory_items`;
 SELECT * FROM `suppliers`;
 SELECT * FROM `categories`;
 SELECT * FROM `locations`;
-
