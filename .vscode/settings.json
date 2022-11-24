@@ -1,0 +1,14 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx-swt.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.base.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.controls.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.fxml.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.graphics.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.media.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.swing.jar",
+        "/Users/yvonneli/Desktop/javafx-sdk-19/lib/javafx.web.jar",
+        "/Users/yvonneli/Desktop/mysql-connector-java-8.0.30/**/*.jar"
+    ]
+}
