@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -16,19 +14,19 @@
    <children>
       <MenuBar VBox.vgrow="NEVER">
          <menus>
-        <Menu mnemonicParsing="false" text="Overall" />
-        <Menu mnemonicParsing="false" text="Add">
+            <Menu mnemonicParsing="false" text="Overall" />
+            <Menu mnemonicParsing="false" text="Add">
                <items>
                   <MenuItem fx:id="addProduct" mnemonicParsing="false" onAction="#SelectAddProduct" text="Add new product" />
                   <MenuItem fx:id="addInventory" mnemonicParsing="false" text="Add new inventory item" />
                </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Update">
+            </Menu>
+            <Menu mnemonicParsing="false" text="Update">
                <items>
                   <MenuItem fx:id="updateProduct" mnemonicParsing="false" text="Update product information" />
                   <MenuItem fx:id="updateInventory" mnemonicParsing="false" text="Update inventory information" />
                </items>
-        </Menu>
+            </Menu>
             <Menu mnemonicParsing="false" text="Remove">
                <items>
                   <MenuItem fx:id="removeProduct" mnemonicParsing="false" text="Remove product" />
@@ -42,28 +40,37 @@
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help" />
-      </menus>
+         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="383.0" prefWidth="600.0">
+      <AnchorPane prefHeight="450.0" prefWidth="600.0">
          <children>
-            <TextField layoutX="54.0" layoutY="99.0" />
-            <Label layoutX="54.0" layoutY="75.0" text="Product Name *" />
-            <Label layoutX="205.0" layoutY="14.0" text="Add a new product">
+            <TextField layoutX="81.0" layoutY="80.0" />
+            <Label layoutX="81.0" layoutY="56.0" text="Product ID *" />
+            <Label layoutX="180.0" layoutY="14.0" text="Update a Inventory Item">
                <font>
                   <Font size="24.0" />
-               </font></Label>
-            <Label layoutX="54.0" layoutY="139.0" text="Category *" />
-            <ChoiceBox layoutX="54.0" layoutY="164.0" prefWidth="150.0" />
-            <Label layoutX="328.0" layoutY="73.0" text="Supplier *" />
-            <ChoiceBox layoutX="328.0" layoutY="99.0" prefWidth="150.0" />
-            <Label layoutX="328.0" layoutY="139.0" text="Description" />
-            <TextArea layoutX="328.0" layoutY="164.0" prefHeight="97.0" prefWidth="200.0" />
-            <Button fx:id="searchProductButton" layoutX="166.0" layoutY="295.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: skyblue;" text="Add" textFill="WHITE">
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="120.0" text="Price *" />
+            <Label layoutX="83.0" layoutY="178.0" text="Size *" />
+            <Label layoutX="83.0" layoutY="238.0" text="Color  *" />
+            <TextField layoutX="81.0" layoutY="143.0" />
+            <TextField layoutX="81.0" layoutY="202.0" />
+            <TextField layoutX="81.0" layoutY="263.0" />
+            <Label layoutX="330.0" layoutY="56.0" text="Amount in stock *" />
+            <TextField layoutX="330.0" layoutY="80.0" />
+            <Label layoutX="330.0" layoutY="120.0" text="Reciept date" />
+            <Label layoutX="331.0" layoutY="178.0" text="Expiration date" />
+            <Label layoutX="330.0" layoutY="238.0" text="Location *" />
+            <TextField layoutX="332.0" layoutY="143.0" />
+            <TextField layoutX="332.0" layoutY="202.0" />
+            <TextField layoutX="332.0" layoutY="263.0" />
+            <Button fx:id="searchProductButton" layoutX="148.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: skyblue;" text="Add" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="cancelButton" layoutX="328.0" layoutY="295.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Cancel" textFill="WHITE">
+            <Button fx:id="cancelButton" layoutX="337.0" layoutY="311.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Cancel" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
