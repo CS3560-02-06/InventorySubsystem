@@ -40,7 +40,7 @@ public class InventoryManager extends Application
          runUpdateSqlScript("src/com/Queries/insertValues.sql");
 
          ProductItem test = new ProductItem(10, "AMONG US", 1, 2, "SUSSY IMPOSTER");
-         AddProductItem(test);
+         //AddProductItem(test);
          RemoveProductItem(10);
 
          launch();
@@ -56,7 +56,7 @@ public class InventoryManager extends Application
    @Override
    public void start(Stage primaryStage) throws Exception {
        stg = primaryStage;
-       File f = new File("src/com/homePage.fxml");
+       File f = new File("src/com/addnewproduct.fxml");
        Parent root = FXMLLoader.load(f.toURI().toURL());
 
        primaryStage.setScene(new Scene(root));
@@ -223,7 +223,7 @@ public class InventoryManager extends Application
    static void AddProductItem(ProductItem newItem)
    {
       String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
-      newItem.brandID + ", '" + newItem.description + "')";
+      newItem.supplierID + ", '" + newItem.description + "')";
       runUpdateSqlQuery(sql);
    }
    /**
