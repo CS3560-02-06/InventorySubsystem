@@ -31,11 +31,14 @@ public class InventoryManager extends Application
    public static void main( String[] args ){
       try {
          con = getConnection();
-         //runUpdateSqlScript("Queries/createDatabase.sql", myConnection);
-         //runUpdateSqlScript("Queries/use.sql", myConnection);
-         //runUpdateSqlScript("Queries/createTables.sql", myConnection);
-         //runUpdateSqlScript("Queries/insertValues.sql", myConnection);
-         //runSqlScript("Queries/select.sql");
+         
+         runUpdateSqlQuery("DROP DATABASE IF EXISTS `INVENTORY_SUBSYSTEM`");
+         runUpdateSqlQuery("CREATE DATABASE `INVENTORY_SUBSYSTEM`");
+         runUpdateSqlQuery("USE `INVENTORY_SUBSYSTEM`");
+         
+         runUpdateSqlScript("src/com/Queries/createTables.sql");
+         runUpdateSqlScript("src/com/Queries/insertValues.sql");
+
          launch();
        } catch (SQLException e) {
          e.printStackTrace(System.err);
@@ -49,7 +52,7 @@ public class InventoryManager extends Application
    @Override
    public void start(Stage primaryStage) throws Exception {
        stg = primaryStage;
-       File f = new File("src/com/guitest.fxml");
+       File f = new File("src/com/homePage.fxml");
        Parent root = FXMLLoader.load(f.toURI().toURL());
 
        primaryStage.setScene(new Scene(root));
@@ -155,6 +158,46 @@ public class InventoryManager extends Application
       }
       System.out.println("Query sucessfully read!");
       inputFile.close();
+    }
+   /**
+    * Executes an update sql query.
+    * @param query The query to execute.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+    public static void runUpdateSqlQuery(String query) throws SQLException
+    {
+       Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+       statement.executeUpdate(query);
+    }
+    /**
+     * Executes a sql query.
+     * @param query The query to execute.
+     * @throws IOException Throws if an error occurs while reading or writing data.
+     * @throws SQLException Throws if an error occurs while executing SQL operations.
+     */
+    public static String[][] runSqlQuery(String query) throws SQLException
+    {
+       Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+       ResultSet result = statement.executeQuery(query);
+       ResultSetMetaData rsmd = result.getMetaData();
+ 
+       result.last();
+       int rows = result.getRow();
+       result.beforeFirst();
+       int cols = rsmd.getColumnCount();
+       String[][] finalSet = new String[rows][cols];
+       int currRow = 0;
+       result.next();
+       while(result.next())
+       {
+          for (int i = 0; i < cols; ++i)
+          {
+             finalSet[currRow][i] = result.getString(i+1);
+          }
+          ++currRow;
+       }
+       return finalSet;
     }
    /**
     * Adds a new ProductItem to the database.
