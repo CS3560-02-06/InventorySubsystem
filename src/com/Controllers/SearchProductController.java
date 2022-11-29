@@ -13,6 +13,8 @@ public class SearchProductController {
     @FXML
     private MenuItem addProduct;
     @FXML
+    private MenuItem addInventory;
+    @FXML
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
@@ -24,6 +26,11 @@ public class SearchProductController {
     public void SelectAddProduct(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/addnewproduct.fxml");
+    }
+
+    public void SelectAddInventory(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/addnewInventory.fxml");
     }
     
     public void SelectSearchProduct(ActionEvent event) throws IOException {
