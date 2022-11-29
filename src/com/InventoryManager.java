@@ -39,6 +39,10 @@ public class InventoryManager extends Application
          runUpdateSqlScript("src/com/Queries/createTables.sql");
          runUpdateSqlScript("src/com/Queries/insertValues.sql");
 
+         ProductItem test = new ProductItem(10, "AMONG US", 1, 2, "SUSSY IMPOSTER");
+         AddProductItem(test);
+         RemoveProductItem(10);
+
          launch();
        } catch (SQLException e) {
          e.printStackTrace(System.err);
@@ -165,10 +169,16 @@ public class InventoryManager extends Application
     * @throws IOException Throws if an error occurs while reading or writing data.
     * @throws SQLException Throws if an error occurs while executing SQL operations.
     */
-    public static void runUpdateSqlQuery(String query) throws SQLException
+    public static void runUpdateSqlQuery(String query)
     {
+      try{
        Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
        statement.executeUpdate(query);
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
     }
     /**
      * Executes a sql query.
@@ -176,68 +186,45 @@ public class InventoryManager extends Application
      * @throws IOException Throws if an error occurs while reading or writing data.
      * @throws SQLException Throws if an error occurs while executing SQL operations.
      */
-    public static String[][] runSqlQuery(String query) throws SQLException
+    public static String[][] runSqlQuery(String query)
     {
-       Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-       ResultSet result = statement.executeQuery(query);
-       ResultSetMetaData rsmd = result.getMetaData();
- 
-       result.last();
-       int rows = result.getRow();
-       result.beforeFirst();
-       int cols = rsmd.getColumnCount();
-       String[][] finalSet = new String[rows][cols];
-       int currRow = 0;
-       result.next();
-       while(result.next())
-       {
-          for (int i = 0; i < cols; ++i)
-          {
-             finalSet[currRow][i] = result.getString(i+1);
-          }
-          ++currRow;
-       }
-       return finalSet;
+      try{
+      Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+      ResultSet result = statement.executeQuery(query);
+      ResultSetMetaData rsmd = result.getMetaData();
+
+      result.last();
+      int rows = result.getRow();
+      result.beforeFirst();
+      int cols = rsmd.getColumnCount();
+      String[][] finalSet = new String[rows][cols];
+      int currRow = 0;
+      result.next();
+      while(result.next())
+      {
+         for (int i = 0; i < cols; ++i)
+         {
+            finalSet[currRow][i] = result.getString(i+1);
+         }
+         ++currRow;
+      }
+      return finalSet;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
     }
    /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
     */
-   static void AddProductItem(ProductItem newItem) throws SQLException
+   static void AddProductItem(ProductItem newItem)
    {
-      Connection conn = null;
-      Statement stmt = null;
-
-      try{
-         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
-         stmt = conn.createStatement();
-
-         String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
-         newItem.brandID + ", '" + newItem.description + "')";
-
-         stmt.executeUpdate(sql);
-         
-      }catch(SQLException se) {
-         se.printStackTrace();
-      }catch(Exception e) {
-         e.printStackTrace();
-      }finally {
-         try {
-            if(stmt != null){
-               conn.close();
-            }
-         }catch(SQLException se) {
-
-         }
-
-         try{
-            if(conn != null){
-               conn.close();
-            }
-         }catch(SQLException se){
-            se.printStackTrace();
-         }
-      }
+      String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
+      newItem.brandID + ", '" + newItem.description + "')";
+      runUpdateSqlQuery(sql);
    }
    /**
     * Removes an existing ProductItem from the database.
@@ -245,7 +232,8 @@ public class InventoryManager extends Application
     */
    static void RemoveProductItem(int productID)
    {
-
+      String sql = "DELETE FROM product_items WHERE product_id = " + productID;
+      runUpdateSqlQuery(sql);
    }
    /**
     * Updates an existing ProductItem's information in the database.
