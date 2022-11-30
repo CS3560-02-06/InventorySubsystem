@@ -44,7 +44,7 @@ public class AddProductController implements Initializable{
     @FXML
     private Button addButton;
     @FXML
-    private Button cancelButton;
+    private Button removeButton;
 
     @FXML
     private ChoiceBox<?> categoryBox;
@@ -120,8 +120,9 @@ public class AddProductController implements Initializable{
         InventoryManager.AddProductItem(productItem);
     }
 
-    public void cancel(MouseEvent event) throws IOException {
-        //InventoryManager m = new InventoryManager();
+    public void remove(MouseEvent event) {
+        int selectedID = productList.getSelectionModel().getSelectedIndex();
+        productList.getItems().remove(selectedID);
 
     }
 
