@@ -116,8 +116,7 @@ public class AddProductController implements Initializable{
         ObservableList<ProductItem> productItems = productList.getItems();
         productItems.add(productItem);
         productList.setItems(productItems);
-
-
+        InventoryManager.AddProductItem(productItem);
     }
 
     public void cancel(MouseEvent event) throws IOException {

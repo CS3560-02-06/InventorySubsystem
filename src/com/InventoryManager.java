@@ -220,7 +220,7 @@ public class InventoryManager extends Application
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
     */
-   static void AddProductItem(ProductItem newItem)
+   static public void AddProductItem(ProductItem newItem)
    {
       String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
       newItem.supplierID + ", '" + newItem.description + "')";
@@ -230,7 +230,7 @@ public class InventoryManager extends Application
     * Removes an existing ProductItem from the database.
     * @param productID The ID of the item to remove.
     */
-   static void RemoveProductItem(int productID)
+   static public void RemoveProductItem(int productID)
    {
       String sql = "DELETE FROM product_items WHERE product_id = " + productID;
       runUpdateSqlQuery(sql);
@@ -240,7 +240,7 @@ public class InventoryManager extends Application
     * @param ID The ID of the ProductItem to update.
     * @param newItem a ProductItem holding the updated information.
     */
-   static void UpdateProductItem(int ID, ProductItem newItem)
+   static public void UpdateProductItem(int ID, ProductItem newItem)
    {
 
    }
@@ -249,7 +249,7 @@ public class InventoryManager extends Application
     * @param newItem The new item to add.
     * @param productID The ID of the product this item is a part of.
     */
-   static void AddInventoryItem(InventoryItem newItem, int productID)
+   static public void AddInventoryItem(InventoryItem newItem, int productID)
    {
 
    }
@@ -258,7 +258,7 @@ public class InventoryManager extends Application
     * @param productID The ID of the product this item is a part of.
     * @param inventoryID The ID of the item to remove.
     */
-   static void RemoveInventoryItem(int productID, int inventoryID)
+   static public void RemoveInventoryItem(int productID, int inventoryID)
    {
 
    }
@@ -268,14 +268,14 @@ public class InventoryManager extends Application
     * @param inventoryID The ID of the InventoryItem to update.
     * @param newItem an InventoryItem holding the updated information.
     */
-   static void UpdateInventoryItem(int productID, int inventoryID, InventoryItem newItem)
+   static public void UpdateInventoryItem(int productID, int inventoryID, InventoryItem newItem)
    {
 
    }
    /**
     * Formats an request for more stock and sends it to a supplier.
     */
-   static void OrderMoreStock()
+   static public void OrderMoreStock()
    {
       // Will contain a loop for each inventory item to be ordered
    }
@@ -283,7 +283,7 @@ public class InventoryManager extends Application
     * Searches for a specific ProductItem in the database.
     * @param ID The ID of the ProductItem to search for.
     */
-   static void SearchForProduct(int ID)
+   static public void SearchForProduct(int ID)
    {
 
    }
@@ -291,7 +291,7 @@ public class InventoryManager extends Application
     * An override for the search function that searches by name instead.
     * @param name The name of the ProductItem to search for.
     */
-   static void SearchForProduct(String name)
+   static public void SearchForProduct(String name)
    {
 
    }
@@ -300,7 +300,7 @@ public class InventoryManager extends Application
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     * @param inventoryID The ID of this specific InventoryItem.
     */
-   static void SearchForInventoryItem(int productID, int inventoryID)
+   static public void SearchForInventoryItem(int productID, int inventoryID)
    {
 
    }
@@ -308,7 +308,7 @@ public class InventoryManager extends Application
     * An override for the search function that searches by productID only.
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     */
-   static void SearchForInventoryItem(int productID)
+   static public void SearchForInventoryItem(int productID)
    {
 
    }
