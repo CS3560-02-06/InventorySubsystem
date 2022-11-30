@@ -52,7 +52,7 @@ public class InventoryManager extends Application
    @Override
    public void start(Stage primaryStage) throws Exception {
        stg = primaryStage;
-       File f = new File("src/com/addnewproduct.fxml");
+       File f = new File("src/com/homePage.fxml");
        Parent root = FXMLLoader.load(f.toURI().toURL());
 
        primaryStage.setScene(new Scene(root));

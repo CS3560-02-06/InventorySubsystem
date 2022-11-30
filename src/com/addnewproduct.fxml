@@ -72,7 +72,7 @@
             </Button>
             <TableView fx:id="productList" layoutX="25.0" layoutY="48.0" prefHeight="243.0" prefWidth="544.0">
               <columns>
-                <TableColumn fx:id="producdID" prefWidth="77.0" text="Product ID" />
+                <TableColumn fx:id="productID" prefWidth="77.0" text="Product ID" />
                 <TableColumn fx:id="name" prefWidth="119.0" text="Product Name" />
                   <TableColumn fx:id="categoryID" prefWidth="90.0" text="Category ID" />
                   <TableColumn fx:id="supplierID" prefWidth="105.0" text="Supplier ID" />

@@ -8,7 +8,6 @@ import com.InventoryManager;
 import com.ProductItem;
 
 import javafx.collections.ObservableList;
-import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -85,25 +84,15 @@ public class AddProductController implements Initializable{
     @FXML
     private ChoiceBox<Integer> categoryBox;
 
-    private int indexToInsert;
+    private int indexToInsert = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        // TEST STUFF REMOVE LATER
-        ProductItem test = new ProductItem(1, "among", 1, 1, "us");
-        ProductItem test2 = new ProductItem(2, "bagong", 1, 1, "us");
-        ProductItem test3 = new ProductItem(3, "wagong", 1, 1, "us");
-        InventoryManager.AddProductItem(test);
-        InventoryManager.AddProductItem(test2);
-        InventoryManager.AddProductItem(test3);
-        // TEST STUFF REMOVE LATER
-        productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productid"));
+        productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
         name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
         categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
         supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
         description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
-        supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
-        categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
         supplierBox.getItems().addAll(1,2,3);
         categoryBox.getItems().addAll(1,2,3);
 
@@ -150,7 +139,7 @@ public class AddProductController implements Initializable{
 
     }
     public void add(MouseEvent event) {
-        ProductItem productItem = new ProductItem(1, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
+        ProductItem productItem = new ProductItem(indexToInsert, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
         addItem(productItem);
         InventoryManager.AddProductItem(productItem);
         ++indexToInsert;
