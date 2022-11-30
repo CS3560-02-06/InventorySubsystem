@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+import java.sql.Date;
 
 // import javafx.application.Application;
 // import javafx.fxml.FXMLLoader;
@@ -38,6 +39,16 @@ public class InventoryManager extends Application
          
          runUpdateSqlScript("src/com/Queries/createTables.sql");
          runUpdateSqlScript("src/com/Queries/insertValues.sql");
+
+         // TEST STUFF REMOVE LATER
+
+         ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
+         AddProductItem(newP);
+         Date newDate = new Date(1, 1, 1);
+         InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
+         AddInventoryItem(newItem);
+
+         // TEST STUFF REMOVE LATER
 
          launch();
        } catch (SQLException e) {
@@ -229,8 +240,8 @@ public class InventoryManager extends Application
     */
    static public void AddProductItem(ProductItem newItem)
    {
-      String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', " + newItem.categoryID + ", " + 
-      newItem.supplierID + ", '" + newItem.description + "')";
+      String sql = "INSERT INTO product_items " + "VALUES (" + newItem.productID + ", '" + newItem.name + "', "
+      + newItem.categoryID + ", " + newItem.supplierID + ", '" + newItem.description + "')";
       runUpdateSqlQuery(sql);
    }
    /**
@@ -249,16 +260,23 @@ public class InventoryManager extends Application
     */
    static public void UpdateProductItem(int ID, ProductItem newItem)
    {
-
+      String sql = "UPDATE product_items SET product_id = '" + newItem.productID + "', product_name = '" + newItem.name
+      + "', category_id_fk = '" + newItem.categoryID + "', supplier_id_fk = '" + newItem.supplierID
+      + "', description = '" + newItem.name + "' WHERE `product_id`=" + ID;
+      runUpdateSqlQuery(sql);
    }
    /**
     * Adds a new InventoryItem to the database.
     * @param newItem The new item to add.
-    * @param productID The ID of the product this item is a part of.
     */
-   static public void AddInventoryItem(InventoryItem newItem, int productID)
-   {
 
+   static public void AddInventoryItem(InventoryItem newItem)
+   {
+      String sql = "INSERT INTO inventory_items " + "VALUES (" + newItem.productID + ", " + newItem.inventoryID + ", "
+      + newItem.price + ", " + newItem.amountInStock + ", " + newItem.size + ", '" + newItem.color + "', '"
+      + newItem.receiptDate + "', '" + newItem.expirationDate + "', " + newItem.locationID + ")";
+      System.out.println(sql);
+      runUpdateSqlQuery(sql);
    }
    /**
     * Removes an existing ProductItem from the database.
