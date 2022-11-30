@@ -112,7 +112,6 @@ public class AddProductController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-	System.out.println(descriptionBox.getText());
         ProductItem productItem = new ProductItem(1, nameBox.getText(), 1, 1, descriptionBox.getText());
         ObservableList<ProductItem> productItems = productList.getItems();
         productItems.add(productItem);
