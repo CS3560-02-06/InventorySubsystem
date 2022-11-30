@@ -83,7 +83,7 @@ public class AddProductController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
-
+        description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
     }
 
     
@@ -112,7 +112,8 @@ public class AddProductController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-        ProductItem productItem = new ProductItem(1, nameBox.getText(), 1, 1, "desc");
+	System.out.println(descriptionBox.getText());
+        ProductItem productItem = new ProductItem(1, nameBox.getText(), 1, 1, descriptionBox.getText());
         ObservableList<ProductItem> productItems = productList.getItems();
         productItems.add(productItem);
         productList.setItems(productItems);
