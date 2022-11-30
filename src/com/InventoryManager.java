@@ -39,10 +39,6 @@ public class InventoryManager extends Application
          runUpdateSqlScript("src/com/Queries/createTables.sql");
          runUpdateSqlScript("src/com/Queries/insertValues.sql");
 
-         ProductItem test = new ProductItem(10, "AMONG US", 1, 2, "SUSSY IMPOSTER");
-         //AddProductItem(test);
-         RemoveProductItem(10);
-
          launch();
        } catch (SQLException e) {
          e.printStackTrace(System.err);
@@ -110,24 +106,24 @@ public class InventoryManager extends Application
     * @throws IOException Throws if an error occurs while reading or writing data.
     * @throws SQLException Throws if an error occurs while executing SQL operations.
     */
-    public static void runUpdateSqlScript(String fileName) throws IOException, SQLException
-    {
-       Statement statement = con.createStatement();
-       File file = new File(fileName);
-       if (!file.exists())
-       {
-          System.out.println("file not found.");
-          System.exit(0);
-       }
-       Scanner inputFile = new Scanner(file);
-       while (inputFile.hasNextLine())
-       {
-         String query = inputFile.nextLine();
-         statement.executeUpdate(query);
-       }
-       System.out.println("Query sucessfully read!");
-       inputFile.close();
-    }
+   public static void runUpdateSqlScript(String fileName) throws IOException, SQLException
+   {
+      Statement statement = con.createStatement();
+      File file = new File(fileName);
+      if (!file.exists())
+      {
+         System.out.println("file not found.");
+         System.exit(0);
+      }
+      Scanner inputFile = new Scanner(file);
+      while (inputFile.hasNextLine())
+      {
+      String query = inputFile.nextLine();
+      statement.executeUpdate(query);
+      }
+      System.out.println("Query sucessfully read!");
+      inputFile.close();
+   }
 
    /**
     * Reads and executes a .sql script file.
@@ -135,87 +131,98 @@ public class InventoryManager extends Application
     * @throws IOException Throws if an error occurs while reading or writing data.
     * @throws SQLException Throws if an error occurs while executing SQL operations.
     */
-    public static void runSqlScript(String fileName) throws IOException, SQLException
-    {
-       Statement statement = con.createStatement();
-       File file = new File(fileName);
-       if (!file.exists())
-       {
-          System.out.println("file not found.");
-          System.exit(0);
-       }
-       Scanner inputFile = new Scanner(file);
-       while (inputFile.hasNextLine())
-       {
-         String query = inputFile.nextLine();
-         ResultSet result = statement.executeQuery(query);
-         ResultSetMetaData rsmd = result.getMetaData();
-         int cols = rsmd.getColumnCount();
-         while(result.next())
-         {
-            for (int i = 1; i <= cols; ++i)
-            {
-               System.out.print(result.getString(i) + " : ");
-            }
-            System.out.println();
-         }
+   public static void runSqlScript(String fileName) throws IOException, SQLException
+   {
+      Statement statement = con.createStatement();
+      File file = new File(fileName);
+      if (!file.exists())
+      {
+         System.out.println("file not found.");
+         System.exit(0);
       }
-      System.out.println("Query sucessfully read!");
-      inputFile.close();
-    }
-   /**
-    * Executes an update sql query.
-    * @param query The query to execute.
-    * @throws IOException Throws if an error occurs while reading or writing data.
-    * @throws SQLException Throws if an error occurs while executing SQL operations.
-    */
-    public static void runUpdateSqlQuery(String query)
-    {
+      Scanner inputFile = new Scanner(file);
+      while (inputFile.hasNextLine())
+      {
+      String query = inputFile.nextLine();
+      ResultSet result = statement.executeQuery(query);
+      ResultSetMetaData rsmd = result.getMetaData();
+      int cols = rsmd.getColumnCount();
+      while(result.next())
+      {
+         for (int i = 1; i <= cols; ++i)
+         {
+            System.out.print(result.getString(i) + " : ");
+         }
+         System.out.println();
+      }
+   }
+   System.out.println("Query sucessfully read!");
+   inputFile.close();
+   }
+/**
+ * Executes an update sql query.
+   * @param query The query to execute.
+   * @throws IOException Throws if an error occurs while reading or writing data.
+   * @throws SQLException Throws if an error occurs while executing SQL operations.
+   */
+   public static void runUpdateSqlQuery(String query)
+   {
       try{
-       Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-       statement.executeUpdate(query);
+         Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+         statement.executeUpdate(query);
       }catch(SQLException se) {
          se.printStackTrace();
       }catch(Exception e) {
          e.printStackTrace();
       }
-    }
-    /**
-     * Executes a sql query.
-     * @param query The query to execute.
-     * @throws IOException Throws if an error occurs while reading or writing data.
-     * @throws SQLException Throws if an error occurs while executing SQL operations.
-     */
-    public static String[][] runSqlQuery(String query)
-    {
+   }
+   /**
+    * Executes a sql query.
+    * @param query The query to execute.
+    * @throws IOException Throws if an error occurs while reading or writing data.
+    * @throws SQLException Throws if an error occurs while executing SQL operations.
+    */
+   public static ResultSet runSqlQuery(String query)
+   {
       try{
-      Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-      ResultSet result = statement.executeQuery(query);
-      ResultSetMetaData rsmd = result.getMetaData();
-
-      result.last();
-      int rows = result.getRow();
-      result.beforeFirst();
-      int cols = rsmd.getColumnCount();
-      String[][] finalSet = new String[rows][cols];
-      int currRow = 0;
-      result.next();
-      while(result.next())
-      {
-         for (int i = 0; i < cols; ++i)
-         {
-            finalSet[currRow][i] = result.getString(i+1);
-         }
-         ++currRow;
-      }
-      return finalSet;
+         Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+         ResultSet result = statement.executeQuery(query);
+         return result;
       }catch(SQLException se) {
          se.printStackTrace();
       }catch(Exception e) {
          e.printStackTrace();
       }
       return null;
-    }
+   }
+   /**
+    * Finds and returns every ProductItem in the database.
+    */
+   static public ProductItem[] GetProductItems()
+   {
+      try{
+         String sql = "SELECT * FROM product_items";
+         ResultSet rs = runSqlQuery(sql);
+
+         rs.last();
+         int rows = rs.getRow();
+         rs.beforeFirst();
+         ProductItem[] result = new ProductItem[rows];
+         int currRow = 0;
+         while(rs.next())
+         {
+            ProductItem item = new ProductItem(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3)), Integer.parseInt(rs.getString(4)), rs.getString(5));
+            result[currRow] = item;
+            ++currRow;
+         }
+         return result;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
    /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
