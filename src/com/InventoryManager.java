@@ -249,7 +249,11 @@ public class InventoryManager extends Application
     */
    static public void UpdateProductItem(int ID, ProductItem newItem)
    {
-
+      String sql = "UPDATE product_items SET product_id = '" + newItem.productID + "', product_name = '" + newItem.name
+      + "', category_id_fk = '" + newItem.categoryID + "', supplier_id_fk = '" + newItem.supplierID
+      + "', description = '" + newItem.name + "' WHERE `product_id`=" + ID;
+      System.out.println(sql);
+      runUpdateSqlQuery(sql);
    }
    /**
     * Adds a new InventoryItem to the database.
