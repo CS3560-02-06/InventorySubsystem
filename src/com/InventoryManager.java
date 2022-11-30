@@ -290,10 +290,40 @@ public class InventoryManager extends Application
     * Searches for a specific ProductItem in the database.
     * @param ID The ID of the ProductItem to search for.
     */
-   static public void SearchForProduct(int ID)
-   {
-
-   }
+    static public ProductItem SearchForProduct(int ID)
+    {
+	 Connection conn = null;
+	       Statement stmt = null;
+	 ProductItem productItem;
+ 
+	 try 
+	 {
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
+			stmt = conn.createStatement();
+		 ResultSet rs;
+ 
+		 rs = stmt.executeQuery("SELECT * FROM product_items WHERE product_id =" + ID);
+ 
+		 // while ( rs.next() ) 
+		 // {
+		 // 	String lastName = rs.getString("Lname");
+		 // 	System.out.println(lastName);
+		 // }
+ 
+		 productItem = new ProductItem(ID, rs.getString("name"), rs.getInt("categoryID"), 
+					 rs.getInt("supplierID"), rs.getString("desc"));
+ 
+		 conn.close();
+ 
+		 return productItem;
+						
+		 } catch (Exception e) {
+		 System.err.println("Got an exception! ");
+		 System.err.println(e.getMessage());
+	 }
+ 
+	 return null;
+    }
    /**
     * An override for the search function that searches by name instead.
     * @param name The name of the ProductItem to search for.
