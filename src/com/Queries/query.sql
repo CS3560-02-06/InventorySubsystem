@@ -42,6 +42,7 @@ CREATE TABLE `inventory_items` (
   `inventory_id` INT,
   `price` FLOAT(2),
   `amount_in_stock` INT,
+  `size` INT,
   `color` VARCHAR(16),
   `reciept_date` DATE,
   `expiration_date` DATE,
