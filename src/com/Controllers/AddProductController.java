@@ -58,7 +58,7 @@ public class AddProductController implements Initializable{
     private TableColumn<ProductItem, String> name;
 
     @FXML
-    private TableColumn<ProductItem, Integer> producdID;
+    private TableColumn<ProductItem, Integer> productID;
 
     @FXML
     private TableColumn<ProductItem, Integer> categoryID;
@@ -85,16 +85,36 @@ public class AddProductController implements Initializable{
     @FXML
     private ChoiceBox<Integer> categoryBox;
 
+    private int indexToInsert;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        // TEST STUFF REMOVE LATER
+        ProductItem test = new ProductItem(1, "among", 1, 1, "us");
+        ProductItem test2 = new ProductItem(2, "bagong", 1, 1, "us");
+        ProductItem test3 = new ProductItem(3, "wagong", 1, 1, "us");
+        InventoryManager.AddProductItem(test);
+        InventoryManager.AddProductItem(test2);
+        InventoryManager.AddProductItem(test3);
+        // TEST STUFF REMOVE LATER
+        productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productid"));
         name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
+        categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
+        supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
         description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
         supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
         categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
         supplierBox.getItems().addAll(1,2,3);
         categoryBox.getItems().addAll(1,2,3);
 
-  
+        ProductItem[] allItems = InventoryManager.GetProductItems();
+        for (int i = 0; i < allItems.length; ++i) {
+            addItem(allItems[i]);
+            if(i == allItems.length-1)
+            {
+                indexToInsert = allItems[i].getProductID() + 1;
+            }
+        }
     }
 
     
@@ -130,12 +150,16 @@ public class AddProductController implements Initializable{
 
     }
     public void add(MouseEvent event) {
-	// System.out.println(categoryBox.getValue());
         ProductItem productItem = new ProductItem(1, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
-        ObservableList<ProductItem> productItems = productList.getItems();
-        productItems.add(productItem);
-        productList.setItems(productItems);
+        addItem(productItem);
         InventoryManager.AddProductItem(productItem);
+        ++indexToInsert;
+    }
+    void addItem(ProductItem item)
+    {
+        ObservableList<ProductItem> productItems = productList.getItems();
+        productItems.add(item);
+        productList.setItems(productItems);
     }
 
     public void remove(MouseEvent event) {
