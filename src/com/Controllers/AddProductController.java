@@ -47,9 +47,6 @@ public class AddProductController implements Initializable{
     private Button removeButton;
 
     @FXML
-    private ChoiceBox<?> categoryBox;
-
-    @FXML
     private TextArea descriptionBox;
 
     //table
@@ -70,20 +67,34 @@ public class AddProductController implements Initializable{
     private TableColumn<ProductItem, String> description;
 
     @FXML
-    private TableColumn<ProductItem, Integer> supplier;
-
-
+    private TableColumn<ProductItem, Integer> supplierID;
 
     @FXML
     private TextField nameBox;
 
+    // @FXML
+    // private TextField supplierBox;
+
+    // @FXML
+    // private TextField categoryBox;
+
+
     @FXML
-    private ChoiceBox<?> supplierBox;
+    private ChoiceBox<Integer> supplierBox;
+
+    @FXML
+    private ChoiceBox<Integer> categoryBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
         description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
+        supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
+        categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
+        supplierBox.getItems().addAll(1,2,3);
+        categoryBox.getItems().addAll(1,2,3);
+
+  
     }
 
     
@@ -110,10 +121,17 @@ public class AddProductController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+    public void selectCategory()
+    {
 
+    }
+    public void selectSupplier()
+    {
+
+    }
     public void add(MouseEvent event) {
-	System.out.println(descriptionBox.getText());
-        ProductItem productItem = new ProductItem(1, nameBox.getText(), 1, 1, descriptionBox.getText());
+	// System.out.println(categoryBox.getValue());
+        ProductItem productItem = new ProductItem(1, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
         ObservableList<ProductItem> productItems = productList.getItems();
         productItems.add(productItem);
         productList.setItems(productItems);
