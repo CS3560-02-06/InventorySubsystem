@@ -54,9 +54,9 @@
                <font>
                   <Font size="24.0" />
                </font></Label>
-            <Label layoutX="50.0" layoutY="362.0" text="Category *" />
+            <Label layoutX="50.0" layoutY="362.0" text="Category ID *" />
             <ChoiceBox fx:id="categoryBox" layoutX="50.0" layoutY="387.0" onMouseClicked="#selectCategory" prefWidth="150.0" />
-            <Label layoutX="51.0" layoutY="422.0" text="Supplier *" />
+            <Label layoutX="51.0" layoutY="422.0" text="Supplier ID *" />
             <ChoiceBox fx:id="supplierBox" layoutX="51.0" layoutY="448.0" onMouseClicked="#selectSupplier" prefWidth="150.0" />
             <Label layoutX="324.0" layoutY="321.0" text="Description" />
             <TextArea fx:id="descriptionBox" layoutX="324.0" layoutY="346.0" prefHeight="97.0" prefWidth="200.0" />
@@ -65,7 +65,12 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="removeButton" layoutX="324.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#remove" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Remove" textFill="WHITE">
+            <Button fx:id="removeButton" layoutX="424.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#remove" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Remove" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="updateButton" layoutX="291.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

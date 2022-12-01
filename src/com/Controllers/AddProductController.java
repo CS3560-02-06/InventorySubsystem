@@ -71,13 +71,6 @@ public class AddProductController implements Initializable{
     @FXML
     private TextField nameBox;
 
-    // @FXML
-    // private TextField supplierBox;
-
-    // @FXML
-    // private TextField categoryBox;
-
-
     @FXML
     private ChoiceBox<Integer> supplierBox;
 
@@ -85,6 +78,18 @@ public class AddProductController implements Initializable{
     private ChoiceBox<Integer> categoryBox;
 
     private int indexToInsert = 1;
+
+    @FXML
+    private TextField changeName;
+
+    @FXML
+    private TextField changeCategory;
+
+    @FXML
+    private TextField changeSupplier;
+
+    @FXML
+    private TextField changeDesc;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -138,6 +143,31 @@ public class AddProductController implements Initializable{
     {
 
     }
+
+    /*
+     * When the update button is clicked this method is called
+     */
+    public void updateInventory(MouseEvent event) {
+        // Get the table item that is selected
+        ProductItem clickedItem = productList.getSelectionModel().getSelectedItem();
+        if(clickedItem == null) {
+            System.out.println("Please select an item"); // Add error message here
+            return;
+        }
+        
+        // Update item in database
+        ProductItem updatedItem = new ProductItem(clickedItem.getProductID(), nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
+        InventoryManager.UpdateProductItem(clickedItem.getProductID(), updatedItem);
+
+        // Update item render
+        clickedItem.setName(updatedItem.getName());
+        clickedItem.setDesc(updatedItem.getDesc());
+        clickedItem.setBrand(updatedItem.getBrand());
+        clickedItem.setCategory(updatedItem.getCategory());
+
+        productList.refresh();
+    }
+
     public void add(MouseEvent event) {
         ProductItem productItem = new ProductItem(indexToInsert, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
         addItem(productItem);
