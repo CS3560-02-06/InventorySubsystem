@@ -10,12 +10,12 @@ public class InventoryItem
    int amountInStock;
    double size;
    String color;
-   Date receiptDate;
-   Date expirationDate;
+   // Date receiptDate;
+   // Date expirationDate;
    int locationID;
 
    // Constructor
-   public InventoryItem(int newPID, int newIID, double newPrice, int newAmount, double newSize, String newColor, Date newRDate, Date newEDate, int newLoc)
+   public InventoryItem(int newPID, int newIID, double newPrice, int newAmount, double newSize, String newColor, int newLoc)
    {
       productID = newPID;
       inventoryID = newIID;
@@ -23,8 +23,8 @@ public class InventoryItem
       amountInStock = newAmount;
       size = newSize;
       color = newColor;
-      receiptDate = newRDate;
-      expirationDate = newEDate;
+      // receiptDate = newRDate;
+      // expirationDate = newEDate;
       locationID = newLoc;
    }
 
@@ -35,8 +35,8 @@ public class InventoryItem
    public int getAmount(){return amountInStock;}
    public double getSize(){return size;}
    public String getColor(){return color;}
-   public Date getRecDate(){return receiptDate;}
-   public Date getExpDate(){return expirationDate;}
+   // public Date getRecDate(){return receiptDate;}
+   // public Date getExpDate(){return expirationDate;}
    public int getLocation(){return locationID;}
 
    // Setters
@@ -46,7 +46,7 @@ public class InventoryItem
    public void setAmount(int newAmount){amountInStock = newAmount;}
    public void setSize(int newSize){size = newSize;}
    public void setColor(String newColor){color = newColor;}
-   public void setRecDate(Date newDate){receiptDate = newDate;}
-   public void setExpDate(Date newDate){expirationDate = newDate;}
+   // public void setRecDate(Date newDate){receiptDate = newDate;}
+   // public void setExpDate(Date newDate){expirationDate = newDate;}
    public void setLocation(int newLocID){locationID = newLocID;}
 }
