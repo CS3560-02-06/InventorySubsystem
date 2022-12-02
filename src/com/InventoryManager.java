@@ -52,7 +52,7 @@ public class InventoryManager extends Application
    @Override
    public void start(Stage primaryStage) throws Exception {
        stg = primaryStage;
-       File f = new File("src/com/homePage.fxml");
+       File f = new File("src/com/addnewinventory.fxml");
        Parent root = FXMLLoader.load(f.toURI().toURL());
 
        primaryStage.setScene(new Scene(root));
@@ -223,6 +223,39 @@ public class InventoryManager extends Application
       }
       return null;
    }
+
+
+
+/**
+    * Finds and returns every InventoryItem in the database.
+    */
+    static public InventoryItem[] GetInventoryItems()
+    {
+       try{
+          String sql = "SELECT * FROM inventory_items";
+          ResultSet rs = runSqlQuery(sql);
+ 
+          rs.last();
+          int rows = rs.getRow();
+          rs.beforeFirst();
+          InventoryItem[] result = new InventoryItem[rows];
+          int currRow = 0;
+          while(rs.next())
+          {
+            InventoryItem item = new InventoryItem(Integer.parseInt(rs.getString(1)), Integer.parseInt(rs.getString(2)), Integer.parseInt(rs.getString(3)), Integer.parseInt(rs.getString(4)), Integer.parseInt(rs.getString(5)), rs.getString(6), Integer.parseInt(rs.getString(7)));
+             result[currRow] = item;
+             ++currRow;
+          }
+          return result;
+       }catch(SQLException se) {
+          se.printStackTrace();
+       }catch(Exception e) {
+          e.printStackTrace();
+       }
+       return null;
+    }
+
+
    /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
@@ -258,6 +291,9 @@ public class InventoryManager extends Application
     */
    static public void AddInventoryItem(InventoryItem newItem, int productID)
    {
+      String sql = "INSERT INTO inventory_items " + "VALUES ("+ newItem.productID + "', " + newItem.inventoryID + ", '" + newItem.price + "', " + newItem.amountInStock + ", " + 
+      newItem.color + ", '" + newItem.locationID + "')";
+      runUpdateSqlQuery(sql);
 
    }
    /**
@@ -267,7 +303,8 @@ public class InventoryManager extends Application
     */
    static public void RemoveInventoryItem(int productID, int inventoryID)
    {
-
+      String sql = "DELETE FROM inventory_items WHERE inventory_id = " + inventoryID;
+      runUpdateSqlQuery(sql);
    }
    /**
     * Updates an existing InventoryItem's information in the database.

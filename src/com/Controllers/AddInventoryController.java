@@ -73,6 +73,8 @@ public class AddInventoryController implements Initializable{
     @FXML
     private TextField sizeBox;
 
+    private int indexToInsert = 1;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         amount.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Amount"));
@@ -82,6 +84,15 @@ public class AddInventoryController implements Initializable{
         productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
         size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Size"));
         locationBox.getItems().addAll(1,2,3);
+
+        InventoryItem[] allItems = InventoryManager.GetInventoryItems();
+        for (int i = 0; i < allItems.length; ++i) {
+            addItem(allItems[i]);
+            if(i == allItems.length-1)
+            {
+                indexToInsert = allItems[i].getProductID() + 1;
+            }
+        }
     }
 
     
@@ -110,10 +121,10 @@ public class AddInventoryController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-        InventoryItem inventoryItem = new InventoryItem(Integer.parseInt(productIDBox.getText()), 1, Integer.parseInt(priceBox.getText()), Integer.parseInt(amountBox.getText()), Integer.parseInt(sizeBox.getText()), colorBox.getText(), locationBox.getValue());
+        InventoryItem inventoryItem = new InventoryItem(Integer.parseInt(productIDBox.getText()), indexToInsert, Integer.parseInt(priceBox.getText()), Integer.parseInt(amountBox.getText()), Integer.parseInt(sizeBox.getText()), colorBox.getText(), locationBox.getValue());
         addItem(inventoryItem);
         InventoryManager.AddInventoryItem(inventoryItem, 0);
-       // ++indexToInsert;
+        ++indexToInsert;
     }
 
     void addItem(InventoryItem item)

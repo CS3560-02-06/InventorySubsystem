@@ -18,7 +18,16 @@ public class guitestController {
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
-    
+    @FXML
+    private MenuItem removeInventory;
+    @FXML
+    private MenuItem removeProduct;
+    @FXML
+    private MenuItem updateInventory;
+    @FXML
+    private MenuItem updateProduct;
+
+
     public guitestController() {
 
     }
@@ -42,4 +51,6 @@ public class guitestController {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+
+
 }
