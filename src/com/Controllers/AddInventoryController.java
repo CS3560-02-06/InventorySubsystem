@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.net.URL;
 
-import com.InventoryItem;
 import com.InventoryManager;
-import com.ProductItem;
+import com.InventoryItem;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,15 +13,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
+import java.sql.Date;
 
-public class AddInventoryController {
+public class AddInventoryController implements Initializable{
 
     @FXML
     private MenuItem addProduct;
@@ -32,38 +31,70 @@ public class AddInventoryController {
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
-    // @FXML
-    // private MenuItem removeInventory;
-    // @FXML
-    // private MenuItem removeProduct;
-    // @FXML
-    // private MenuItem updateInventory;
-    // @FXML
-    // private MenuItem updateProduct;
+    @FXML
+    private MenuItem removeInventory;
+    @FXML
+    private MenuItem removeProduct;
+    @FXML
+    private MenuItem updateInventory;
+    @FXML
+    private MenuItem updateProduct;
 
     @FXML
     private Button addButton;
     @FXML
-    private Button cancelButton;
+    private Button removeButton;
 
     @FXML
-    private TextField productIDBox;
+    private TableView<InventoryItem> inventoryList;
+
     @FXML
-    private TextField priceBox;
+    private TableColumn<InventoryItem, Integer> amount;
     @FXML
-    private TextField sizeBox;
+    private TableColumn<InventoryItem, Integer> price;
+    @FXML
+    private TableColumn<InventoryItem, String> color;
+    @FXML
+    private TableColumn<InventoryItem, Integer> inventoryID;
+    @FXML
+    private TableColumn<InventoryItem, Integer> locationID;
+    @FXML
+    private TableColumn<InventoryItem, Integer> productID;
+    @FXML
+    private TableColumn<InventoryItem, Integer> size;
+
+    @FXML
+    private ChoiceBox<Integer> locationBox;
+    @FXML
+    private TextField amountBox;
     @FXML
     private TextField colorBox;
     @FXML
-    private TextField stockBox;
+    private TextField priceBox;
     @FXML
-    private TextField recieptBox;
+    private TextField productIDBox;
     @FXML
-    private TextField expirationBox;
-    @FXML
-    private TextField locationBox;
+    private TextField sizeBox;
 
     private int indexToInsert = 1;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        price.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Price"));
+        amount.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Amount"));
+        color.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("Color"));
+        inventoryID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("InventoryID"));
+        locationID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Location"));
+        productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
+        size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Size"));
+        locationBox.getItems().addAll(1,2,3);
+
+        InventoryItem[] allItems = InventoryManager.GetInventoryItems();
+        for (int i = 0; i < allItems.length; ++i) {
+            addItem(allItems[i]);
+        }
+    }
+
     
     public AddInventoryController() {
 
@@ -90,14 +121,45 @@ public class AddInventoryController {
     }
 
     public void add(MouseEvent event) {
-        // InventoryItem inventoryItem = new InventoryItem(Integer.parseInt(productIDBox.getText()), indexToInsert, Double.parseDouble(priceBox.getText()), 
-        //                                             Integer.parseInt(stockBox.getText()), Double.parseDouble(sizeBox.getText()), colorBox.getText(), 
-        //                                             recieptBox.getText(), expirationBox.getText(), Integer.parseInt(locationBox.getText()));
-        // InventoryManager.AddInventoryItem(inventoryItem);
-        // ++ indexToInsert;
+        Date temp = new Date(1, 1, 1);
+        int productID = Integer.parseInt(productIDBox.getText());
+        InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
+        if(itemsOnProduct == null)
+        {
+            indexToInsert = 1;
+        }
+        else
+        {
+            for (int i = 0; i < itemsOnProduct.length; ++i) {
+                if(i == itemsOnProduct.length-1)
+                {
+                    indexToInsert = itemsOnProduct[i].getInventoryID() + 1;
+                }
+            }
+        }
+        InventoryItem inventoryItem = new InventoryItem(productID, indexToInsert,
+                                                    Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
+                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), temp, temp, locationBox.getValue());
+        addItem(inventoryItem);
+        InventoryManager.AddInventoryItem(inventoryItem);
+        ++indexToInsert;
+    }
+
+    void addItem(InventoryItem item)
+    {
+        ObservableList<InventoryItem> inventoryItem = inventoryList.getItems();
+        inventoryItem.add(item);
+        inventoryList.setItems(inventoryItem);
     }
 
     public void remove(MouseEvent event) {
+        int selectedID = inventoryList.getSelectionModel().getSelectedIndex();
+        inventoryList.getItems().remove(selectedID);
 
     }
+
 }
+
+
+
+
