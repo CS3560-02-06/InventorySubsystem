@@ -344,7 +344,7 @@ public class InventoryManager extends Application
       return null;
    }
    /**
-    * An override for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
+    * An overload for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
     * @param name The name of the ProductItem to search for.
     */
    static public ProductItem[] SearchForProduct(String name)
