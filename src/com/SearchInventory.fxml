@@ -37,28 +37,30 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchInventoryController">
-  <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Overall" />
-        <Menu mnemonicParsing="false" text="Add">
+<VBox prefHeight="563.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddProductController">
+   <children>
+      <MenuBar prefHeight="29.0" prefWidth="593.0" VBox.vgrow="NEVER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Overall" />
+            <Menu mnemonicParsing="false" text="Add">
                <items>
                   <MenuItem fx:id="addProduct" mnemonicParsing="false" onAction="#SelectAddProduct" text="Add new product" />
                   <MenuItem fx:id="addInventory" mnemonicParsing="false" onAction="#SelectAddInventory" text="Add new inventory item" />
                </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Update">
+            </Menu>
+            <Menu mnemonicParsing="false" text="Update">
                <items>
                   <MenuItem fx:id="updateProduct" mnemonicParsing="false" text="Update product information" />
                   <MenuItem fx:id="updateInventory" mnemonicParsing="false" text="Update inventory information" />
                </items>
-        </Menu>
+            </Menu>
             <Menu mnemonicParsing="false" text="Remove">
                <items>
                   <MenuItem fx:id="removeProduct" mnemonicParsing="false" text="Remove product" />
@@ -72,31 +74,37 @@
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help" />
-      </menus>
-    </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label alignment="CENTER" layoutX="183.0" layoutY="-13.0" prefHeight="111.0" prefWidth="273.0" style="&#10;" text="Search Inventory Item" textAlignment="CENTER" wrapText="false">
-          <font>
-            <Font size="24.0" />
-          </font>
-        </Label>
-            <Label layoutX="29.0" layoutY="64.0" text="Inventory ID">
+         </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="541.0" prefWidth="634.0">
+         <children>
+            <TextField fx:id="nameBox" layoutX="103.0" layoutY="437.0" promptText="Enter Product ID" />
+            <Label layoutX="103.0" layoutY="408.0" text="Product ID" />
+            <Label layoutX="233.0" layoutY="14.0" text="Search Inventory Item">
                <font>
-                  <Font size="18.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
-            <TextField layoutX="29.0" layoutY="104.0" promptText="Enter inventory ID" />
-            <Button fx:id="searchProductButton" layoutX="144.0" layoutY="282.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="122.0" style="-fx-background-color: skyblue;" text="Search" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font></Button>
-            <Button fx:id="cancelButton" layoutX="381.0" layoutY="282.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="122.0" style="-fx-background-color: gray;" text="Cancel" textFill="WHITE">
+            <Label layoutX="351.0" layoutY="408.0" text="Inventory ID" />
+            <Button fx:id="addButton" layoutX="282.0" layoutY="484.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="40.0" prefWidth="134.0" style="-fx-background-color: skyblue;" text="Search" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-      </children>
-    </AnchorPane>
-  </children>
+            <TableView fx:id="productList" layoutX="32.0" layoutY="48.0" prefHeight="344.0" prefWidth="640.0">
+               <columns>
+                  <TableColumn fx:id="productID" prefWidth="82.39996337890625" text="Product ID" />
+                  <TableColumn fx:id="name" prefWidth="87.20001983642578" text="Inventory ID" />
+                  <TableColumn fx:id="categoryID" prefWidth="61.5999755859375" text="Price" />
+                  <TableColumn fx:id="supplierID" prefWidth="65.60003662109375" text="Stock" />
+                  <TableColumn fx:id="description" prefWidth="63.199951171875" text="size" />
+                  <TableColumn fx:id="description1" prefWidth="104.800048828125" text="Receipt Date" />
+                  <TableColumn fx:id="description2" prefWidth="107.19992065429688" text="Expiration Date" />
+                  <TableColumn fx:id="description3" prefWidth="64.800048828125" text="Location" />
+               </columns>
+            </TableView>
+            <TextField fx:id="nameBox1" layoutX="350.0" layoutY="437.0" promptText="Enter Inventory ID" />
+         </children>
+      </AnchorPane>
+   </children>
 </VBox>
