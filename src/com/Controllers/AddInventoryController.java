@@ -50,6 +50,8 @@ public class AddInventoryController implements Initializable{
     @FXML
     private TableColumn<InventoryItem, Integer> amount;
     @FXML
+    private TableColumn<InventoryItem, Integer> price;
+    @FXML
     private TableColumn<InventoryItem, String> color;
     @FXML
     private TableColumn<InventoryItem, Integer> inventoryID;
@@ -77,6 +79,7 @@ public class AddInventoryController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        price.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Price"));
         amount.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Amount"));
         color.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("Color"));
         inventoryID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("InventoryID"));
