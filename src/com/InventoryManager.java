@@ -44,7 +44,7 @@ public class InventoryManager extends Application
 
          ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
          AddProductItem(newP);
-         Date newDate = new Date(1, 1, 1);
+         //Date newDate = new Date(1, 1, 1);
          InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
          AddInventoryItem(newItem);
 
