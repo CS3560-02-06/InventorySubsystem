@@ -1,6 +1,7 @@
 package com;
 
 import javafx.application.Application;
+import javafx.css.Size;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,14 +50,18 @@ public class InventoryManager extends Application
          newP = new ProductItem(3, "among us", 1, 2, "gama");
          AddProductItem(newP);
          Date newDate = new Date(1, 1, 1);
-         InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
+         InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
          AddInventoryItem(newItem);
-         InventoryItem newerItem = new InventoryItem(1, 10000, 5.5, 1, 3.5, "RED", newDate, newDate, 0);
-         UpdateInventoryItem(1, newerItem);
+         InventoryItem newerItem = new InventoryItem(1, 2, 5.6, 1, 3.5, "RED", newDate, newDate, 0);
+         UpdateInventoryItem(1, 1, newerItem);
+         newItem = new InventoryItem(1, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
+         AddInventoryItem(newItem);
          ProductItem pi = SearchForProduct(1);
          System.out.println(pi.getName());
          ProductItem[] pis = SearchForProduct("among us");
          System.out.print(pis.length);
+         InventoryItem II = SearchForInventoryItem(1, 1);
+         System.out.println(II.getPrice());
 
          // TEST STUFF REMOVE LATER
 
@@ -302,11 +307,12 @@ public class InventoryManager extends Application
     * @param inventoryID The ID of the InventoryItem to update.
     * @param newItem an InventoryItem holding the updated information.
     */
-   static public void UpdateInventoryItem(int inventoryID, InventoryItem newItem)
+   static public void UpdateInventoryItem(int productID, int inventoryID, InventoryItem newItem)
    {  
       String sql = "UPDATE inventory_items SET product_id_fk = " + newItem.productID + ", inventory_id = " + newItem.inventoryID + ", price = "
       + newItem.price + ", amount_in_stock = " + newItem.amountInStock + ", size = " + newItem.size + ", color = '" + newItem.color + "', reciept_date = '"
-      + newItem.receiptDate + "', expiration_date = '" + newItem.expirationDate + "', location_id_fk = " + newItem.locationID;
+      + newItem.receiptDate + "', expiration_date = '" + newItem.expirationDate + "', location_id_fk = " + newItem.locationID
+      +  " WHERE (`product_id_FK` = " + productID + " AND `inventory_id` = " + inventoryID + ")";
       System.out.println(sql);
       runUpdateSqlQuery(sql);
    }
@@ -330,9 +336,10 @@ public class InventoryManager extends Application
 
       try
       {
+         if(!rs.isBeforeFirst()){return null;}
          rs.next();
-         productItem = new ProductItem(ID, rs.getString("product_name"), rs.getInt("category_id_fk"), 
-                                       rs.getInt("supplier_id_fk"), rs.getString("description"));
+         productItem = new ProductItem(ID, rs.getString("product_name"), rs.getInt("category_id_FK"), 
+                                       rs.getInt("supplier_id_FK"), rs.getString("description"));
          return productItem;
                   
       }
@@ -356,10 +363,11 @@ public class InventoryManager extends Application
 
       try
       {
+         if(!rs.isBeforeFirst()){return null;}
          while(rs.next())
          {
-            ProductItem productItem = new ProductItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getInt("category_id_fk"), 
-                                       rs.getInt("supplier_id_fk"), rs.getString("description"));
+            ProductItem productItem = new ProductItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getInt("category_id_FK"), 
+                                       rs.getInt("supplier_id_FK"), rs.getString("description"));
             productItems.add(productItem);
          }
          Object[] objArray = productItems.toArray();
@@ -379,9 +387,29 @@ public class InventoryManager extends Application
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     * @param inventoryID The ID of this specific InventoryItem.
     */
-   static public void SearchForInventoryItem(int productID, int inventoryID)
+   static public InventoryItem SearchForInventoryItem(int productID, int inventoryID)
    {
+      InventoryItem inventoryItem;
+      ResultSet rs;
+      System.out.println("SELECT * FROM inventory_items WHERE (product_id_FK = " + productID + " AND inventory_id = " + inventoryID + ")");
+      rs = runSqlQuery("SELECT * FROM inventory_items WHERE (product_id_FK = " + productID + " AND inventory_id = " + inventoryID + ")");
 
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
+                                          rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
+                                          rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+         return inventoryItem;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
    /**
     * An override for the search function that searches by productID only.
