@@ -47,6 +47,10 @@ public class InventoryManager extends Application
          Date newDate = new Date(1, 1, 1);
          InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
          AddInventoryItem(newItem);
+         InventoryItem newerItem = new InventoryItem(1, 10000, 5.5, 1, 3.5, "RED", newDate, newDate, 0);
+         UpdateInventoryItem(1, newerItem);
+         ProductItem pi = SearchForProduct(1);
+         System.out.println(pi.getName());
 
          // TEST STUFF REMOVE LATER
 
@@ -275,17 +279,16 @@ public class InventoryManager extends Application
       String sql = "INSERT INTO inventory_items " + "VALUES (" + newItem.productID + ", " + newItem.inventoryID + ", "
       + newItem.price + ", " + newItem.amountInStock + ", " + newItem.size + ", '" + newItem.color + "', '"
       + newItem.receiptDate + "', '" + newItem.expirationDate + "', " + newItem.locationID + ")";
-      System.out.println(sql);
       runUpdateSqlQuery(sql);
    }
    /**
     * Removes an existing ProductItem from the database.
-    * @param productID The ID of the product this item is a part of.
     * @param inventoryID The ID of the item to remove.
     */
-   static public void RemoveInventoryItem(int productID, int inventoryID)
+   static public void RemoveInventoryItem(int inventoryID)
    {
-
+      String sql = "DELETE FROM `inventory_items` WHERE `inventory_id` = " + inventoryID;
+      runUpdateSqlQuery(sql);
    }
    /**
     * Updates an existing InventoryItem's information in the database.
@@ -293,9 +296,13 @@ public class InventoryManager extends Application
     * @param inventoryID The ID of the InventoryItem to update.
     * @param newItem an InventoryItem holding the updated information.
     */
-   static public void UpdateInventoryItem(int productID, int inventoryID, InventoryItem newItem)
-   {
-
+   static public void UpdateInventoryItem(int inventoryID, InventoryItem newItem)
+   {  
+      String sql = "UPDATE inventory_items SET product_id_fk = " + newItem.productID + ", inventory_id = " + newItem.inventoryID + ", price = "
+      + newItem.price + ", amount_in_stock = " + newItem.amountInStock + ", size = " + newItem.size + ", color = '" + newItem.color + "', reciept_date = '"
+      + newItem.receiptDate + "', expiration_date = '" + newItem.expirationDate + "', location_id_fk = " + newItem.locationID;
+      System.out.println(sql);
+      runUpdateSqlQuery(sql);
    }
    /**
     * Formats an request for more stock and sends it to a supplier.
@@ -310,32 +317,21 @@ public class InventoryManager extends Application
     */
    static public ProductItem SearchForProduct(int ID)
    {
-      Connection conn = null;
-            Statement stmt = null;
       ProductItem productItem;
+      ResultSet rs;
 
-      try 
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_id =" + ID);
+
+      try
       {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
-         stmt = conn.createStatement();
-         ResultSet rs;
-
-         rs = stmt.executeQuery("SELECT * FROM product_items WHERE product_id =" + ID);
-
-         // while ( rs.next() ) 
-         // {
-         // 	String lastName = rs.getString("Lname");
-         // 	System.out.println(lastName);
-         // }
-
-         productItem = new ProductItem(ID, rs.getString("name"), rs.getInt("categoryID"), 
-                  rs.getInt("supplierID"), rs.getString("desc"));
-
-         conn.close();
-
+         rs.next();
+         productItem = new ProductItem(ID, rs.getString("product_name"), rs.getInt("category_id_fk"), 
+                                       rs.getInt("supplier_id_fk"), rs.getString("description"));
          return productItem;
                   
-         } catch (Exception e) {
+      }
+      catch (Exception e)
+      {
          System.err.println("Got an exception! ");
          System.err.println(e.getMessage());
       }
