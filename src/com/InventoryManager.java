@@ -44,6 +44,10 @@ public class InventoryManager extends Application
 
          ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
          AddProductItem(newP);
+         newP = new ProductItem(2, "among us", 1, 2, "gama");
+         AddProductItem(newP);
+         newP = new ProductItem(3, "among us", 1, 2, "gama");
+         AddProductItem(newP);
          Date newDate = new Date(1, 1, 1);
          InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
          AddInventoryItem(newItem);
@@ -51,6 +55,8 @@ public class InventoryManager extends Application
          UpdateInventoryItem(1, newerItem);
          ProductItem pi = SearchForProduct(1);
          System.out.println(pi.getName());
+         ProductItem[] pis = SearchForProduct("among us");
+         System.out.print(pis.length);
 
          // TEST STUFF REMOVE LATER
 
@@ -338,12 +344,35 @@ public class InventoryManager extends Application
       return null;
    }
    /**
-    * An override for the search function that searches by name instead.
+    * An override for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
     * @param name The name of the ProductItem to search for.
     */
-   static public void SearchForProduct(String name)
+   static public ProductItem[] SearchForProduct(String name)
    {
+      Vector<ProductItem> productItems = new Vector<ProductItem>();
+      ResultSet rs;
 
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name = \"" + name + "\"");
+
+      try
+      {
+         while(rs.next())
+         {
+            ProductItem productItem = new ProductItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getInt("category_id_fk"), 
+                                       rs.getInt("supplier_id_fk"), rs.getString("description"));
+            productItems.add(productItem);
+         }
+         Object[] objArray = productItems.toArray();
+         ProductItem[] finalResult = Arrays.copyOf(objArray, objArray.length, ProductItem[].class);
+         return finalResult;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
    /**
     * Searches for a specific InventoryItem in the database.
