@@ -59,9 +59,11 @@ public class InventoryManager extends Application
          ProductItem pi = SearchForProduct(1);
          System.out.println(pi.getName());
          ProductItem[] pis = SearchForProduct("among us");
-         System.out.print(pis.length);
+         System.out.println(pis.length);
          InventoryItem II = SearchForInventoryItem(1, 1);
          System.out.println(II.getPrice());
+         InventoryItem[] IIs = SearchForInventoryItem(1);
+         System.out.println(IIs.length);
 
          // TEST STUFF REMOVE LATER
 
@@ -351,7 +353,7 @@ public class InventoryManager extends Application
       return null;
    }
    /**
-    * An override for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
+    * An overload for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
     * @param name The name of the ProductItem to search for.
     */
    static public ProductItem[] SearchForProduct(String name)
@@ -391,7 +393,6 @@ public class InventoryManager extends Application
    {
       InventoryItem inventoryItem;
       ResultSet rs;
-      System.out.println("SELECT * FROM inventory_items WHERE (product_id_FK = " + productID + " AND inventory_id = " + inventoryID + ")");
       rs = runSqlQuery("SELECT * FROM inventory_items WHERE (product_id_FK = " + productID + " AND inventory_id = " + inventoryID + ")");
 
       try
@@ -415,8 +416,31 @@ public class InventoryManager extends Application
     * An override for the search function that searches by productID only.
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     */
-   static public void SearchForInventoryItem(int productID)
+   static public InventoryItem[] SearchForInventoryItem(int productID)
    {
+      Vector<InventoryItem> inventoryItems = new Vector<InventoryItem>();
+      ResultSet rs;
+      rs = runSqlQuery("SELECT * FROM inventory_items WHERE product_id_FK = " + productID);
 
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         while(rs.next())
+         {
+            InventoryItem inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
+                                             rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
+                                             rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+            inventoryItems.add(inventoryItem);
+         }
+         Object[] objArray = inventoryItems.toArray();
+         InventoryItem[] finalResult = Arrays.copyOf(objArray, objArray.length, InventoryItem[].class);
+         return finalResult;
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
 }
