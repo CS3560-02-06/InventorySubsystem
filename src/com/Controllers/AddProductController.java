@@ -144,6 +144,29 @@ public class AddProductController implements Initializable{
         InventoryManager.AddProductItem(productItem);
         ++indexToInsert;
     }
+    /*
+    * When the update button is clicked this method is called
+    */
+    public void updateInventory(MouseEvent event) {
+       // Get the table item that is selected
+       ProductItem clickedItem = productList.getSelectionModel().getSelectedItem();
+       if(clickedItem == null) {
+           System.out.println("Please select an item"); // Add error message here
+           return;
+       }
+       
+       // Update item in database
+       ProductItem updatedItem = new ProductItem(clickedItem.getProductID(), nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
+       InventoryManager.UpdateProductItem(clickedItem.getProductID(), updatedItem);
+
+       // Update item render
+       clickedItem.setName(updatedItem.getName());
+       clickedItem.setDesc(updatedItem.getDesc());
+       clickedItem.setBrand(updatedItem.getBrand());
+       clickedItem.setCategory(updatedItem.getCategory());
+
+       productList.refresh();
+   }
     void addItem(ProductItem item)
     {
         ObservableList<ProductItem> productItems = productList.getItems();
