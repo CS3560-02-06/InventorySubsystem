@@ -46,7 +46,7 @@ public class SearchProductController {
     @FXML
     private TextField nameBox;
     @FXML
-    private TextField idBox;
+    private TextField productIDBox;
 
     @FXML
     private TableView<ProductItem> productList;
@@ -113,7 +113,7 @@ public class SearchProductController {
     public void search(MouseEvent event) {
         int productID = -1;
         String productName = "";
-        productID = Integer.valueOf(idBox.getText());
+        productID = Integer.valueOf(productIDBox.getText());
         productName = nameBox.getText();
 
         ProductItem productItem;
