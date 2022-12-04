@@ -50,19 +50,14 @@ public class SearchProductController {
 
     @FXML
     private TableView<ProductItem> productList;
-
     @FXML
     private TableColumn<ProductItem, Integer> productID;
-
     @FXML
     private TableColumn<ProductItem, String> name;
-
     @FXML
     private TableColumn<ProductItem, Integer> categoryID;
-
     @FXML
     private TableColumn<ProductItem, Integer> supplierID;
-
     @FXML
     private TableColumn<ProductItem, String> description;
     
@@ -130,7 +125,7 @@ public class SearchProductController {
         {
             productItemList = InventoryManager.SearchForProduct(productName);
 
-            //If productItem list is found
+            //If productItemList is found
         }
         // else
         //     print out error?
