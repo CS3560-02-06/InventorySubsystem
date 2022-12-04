@@ -239,8 +239,39 @@ public class InventoryManager extends Application
          int currRow = 0;
          while(rs.next())
          {
-            ProductItem item = new ProductItem(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3)), Integer.parseInt(rs.getString(4)), rs.getString(5));
-            result[currRow] = item;
+            ProductItem productItem = new ProductItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getInt("category_id_FK"), 
+                                          rs.getInt("supplier_id_FK"), rs.getString("description"));
+            result[currRow] = productItem;
+            ++currRow;
+         }
+         return result;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+   /**
+    * Finds and returns every InventoryItem in the database.
+    */
+   static public InventoryItem[] GetInventoryItems()
+   {
+      try{
+         String sql = "SELECT * FROM inventory_items";
+         ResultSet rs = runSqlQuery(sql);
+
+         rs.last();
+         int rows = rs.getRow();
+         rs.beforeFirst();
+         InventoryItem[] result = new InventoryItem[rows];
+         int currRow = 0;
+         while(rs.next())
+         {
+            InventoryItem inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
+                                             rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
+                                             rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+            result[currRow] = inventoryItem;
             ++currRow;
          }
          return result;
