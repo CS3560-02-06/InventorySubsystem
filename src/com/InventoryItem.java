@@ -19,7 +19,7 @@ public class InventoryItem
    {
       productID = newPID;
       inventoryID = newIID;
-      price = newPID;
+      price = newPrice;
       amountInStock = newAmount;
       size = newSize;
       color = newColor;

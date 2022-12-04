@@ -1,6 +1,7 @@
 package com;
 
 import javafx.application.Application;
+import javafx.css.Size;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,9 +45,25 @@ public class InventoryManager extends Application
 
          ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
          AddProductItem(newP);
-         //Date newDate = new Date(1, 1, 1);
-         InventoryItem newItem = new InventoryItem(1, 0, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
+         newP = new ProductItem(2, "among us", 1, 2, "gama");
+         AddProductItem(newP);
+         newP = new ProductItem(3, "among us", 1, 2, "gama");
+         AddProductItem(newP);
+         Date newDate = new Date(1, 1, 1);
+         InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
          AddInventoryItem(newItem);
+         InventoryItem newerItem = new InventoryItem(1, 2, 5.6, 1, 3.5, "RED", newDate, newDate, 0);
+         UpdateInventoryItem(1, 1, newerItem);
+         newItem = new InventoryItem(1, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
+         AddInventoryItem(newItem);
+         ProductItem pi = SearchForProduct(1);
+         System.out.println(pi.getName());
+         ProductItem[] pis = SearchForProduct("among us");
+         System.out.println(pis.length);
+         InventoryItem II = SearchForInventoryItem(1, 1);
+         System.out.println(II.getPrice());
+         InventoryItem[] IIs = SearchForInventoryItem(1);
+         System.out.println(IIs.length);
 
          // TEST STUFF REMOVE LATER
 
@@ -275,17 +292,16 @@ public class InventoryManager extends Application
       String sql = "INSERT INTO inventory_items " + "VALUES (" + newItem.productID + ", " + newItem.inventoryID + ", "
       + newItem.price + ", " + newItem.amountInStock + ", " + newItem.size + ", '" + newItem.color + "', '"
       + newItem.receiptDate + "', '" + newItem.expirationDate + "', " + newItem.locationID + ")";
-      System.out.println(sql);
       runUpdateSqlQuery(sql);
    }
    /**
     * Removes an existing ProductItem from the database.
-    * @param productID The ID of the product this item is a part of.
     * @param inventoryID The ID of the item to remove.
     */
-   static public void RemoveInventoryItem(int productID, int inventoryID)
+   static public void RemoveInventoryItem(int inventoryID)
    {
-
+      String sql = "DELETE FROM `inventory_items` WHERE `inventory_id` = " + inventoryID;
+      runUpdateSqlQuery(sql);
    }
    /**
     * Updates an existing InventoryItem's information in the database.
@@ -294,8 +310,13 @@ public class InventoryManager extends Application
     * @param newItem an InventoryItem holding the updated information.
     */
    static public void UpdateInventoryItem(int productID, int inventoryID, InventoryItem newItem)
-   {
-
+   {  
+      String sql = "UPDATE inventory_items SET product_id_fk = " + newItem.productID + ", inventory_id = " + newItem.inventoryID + ", price = "
+      + newItem.price + ", amount_in_stock = " + newItem.amountInStock + ", size = " + newItem.size + ", color = '" + newItem.color + "', reciept_date = '"
+      + newItem.receiptDate + "', expiration_date = '" + newItem.expirationDate + "', location_id_fk = " + newItem.locationID
+      +  " WHERE (`product_id_FK` = " + productID + " AND `inventory_id` = " + inventoryID + ")";
+      System.out.println(sql);
+      runUpdateSqlQuery(sql);
    }
    /**
     * Formats an request for more stock and sends it to a supplier.
@@ -310,60 +331,116 @@ public class InventoryManager extends Application
     */
    static public ProductItem SearchForProduct(int ID)
    {
-      Connection conn = null;
-            Statement stmt = null;
       ProductItem productItem;
+      ResultSet rs;
 
-      try 
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_id =" + ID);
+
+      try
       {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/INVENTORY_SUBSYSTEM", "root", "3560");
-         stmt = conn.createStatement();
-         ResultSet rs;
-
-         rs = stmt.executeQuery("SELECT * FROM product_items WHERE product_id =" + ID);
-
-         // while ( rs.next() ) 
-         // {
-         // 	String lastName = rs.getString("Lname");
-         // 	System.out.println(lastName);
-         // }
-
-         productItem = new ProductItem(ID, rs.getString("name"), rs.getInt("categoryID"), 
-                  rs.getInt("supplierID"), rs.getString("desc"));
-
-         conn.close();
-
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         productItem = new ProductItem(ID, rs.getString("product_name"), rs.getInt("category_id_FK"), 
+                                       rs.getInt("supplier_id_FK"), rs.getString("description"));
          return productItem;
                   
-         } catch (Exception e) {
+      }
+      catch (Exception e)
+      {
          System.err.println("Got an exception! ");
          System.err.println(e.getMessage());
       }
       return null;
    }
    /**
-    * An override for the search function that searches by name instead.
+    * An overload for SearchForProduct that seaches for ProductItems by name. Returns an array of ProductItems.
     * @param name The name of the ProductItem to search for.
     */
-   static public void SearchForProduct(String name)
+   static public ProductItem[] SearchForProduct(String name)
    {
+      Vector<ProductItem> productItems = new Vector<ProductItem>();
+      ResultSet rs;
 
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name = \"" + name + "\"");
+
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         while(rs.next())
+         {
+            ProductItem productItem = new ProductItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getInt("category_id_FK"), 
+                                       rs.getInt("supplier_id_FK"), rs.getString("description"));
+            productItems.add(productItem);
+         }
+         Object[] objArray = productItems.toArray();
+         ProductItem[] finalResult = Arrays.copyOf(objArray, objArray.length, ProductItem[].class);
+         return finalResult;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
    /**
     * Searches for a specific InventoryItem in the database.
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     * @param inventoryID The ID of this specific InventoryItem.
     */
-   static public void SearchForInventoryItem(int productID, int inventoryID)
+   static public InventoryItem SearchForInventoryItem(int productID, int inventoryID)
    {
+      InventoryItem inventoryItem;
+      ResultSet rs;
+      rs = runSqlQuery("SELECT * FROM inventory_items WHERE (product_id_FK = " + productID + " AND inventory_id = " + inventoryID + ")");
 
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
+                                          rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
+                                          rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+         return inventoryItem;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
    /**
     * An override for the search function that searches by productID only.
     * @param productID The ID of the ProductItem this InventoryItem is a part of.
     */
-   static public void SearchForInventoryItem(int productID)
+   static public InventoryItem[] SearchForInventoryItem(int productID)
    {
+      Vector<InventoryItem> inventoryItems = new Vector<InventoryItem>();
+      ResultSet rs;
+      rs = runSqlQuery("SELECT * FROM inventory_items WHERE product_id_FK = " + productID);
 
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         while(rs.next())
+         {
+            InventoryItem inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
+                                             rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
+                                             rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+            inventoryItems.add(inventoryItem);
+         }
+         Object[] objArray = inventoryItems.toArray();
+         InventoryItem[] finalResult = Arrays.copyOf(objArray, objArray.length, InventoryItem[].class);
+         return finalResult;
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
    }
 }
