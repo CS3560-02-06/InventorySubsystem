@@ -72,9 +72,59 @@
             <Font size="36.0" />
           </font>
         </Label>
-            <Label alignment="CENTER" layoutX="21.0" layoutY="53.0" prefHeight="38.0" prefWidth="154.0" style="&#10;" text="User Guide:" wrapText="false">
+            <Label layoutX="31.0" layoutY="68.0" text="This system store information of: ">
                <font>
-                  <Font size="24.0" />
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="98.0" text="product item, inventory item, category, supplier, location">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="145.0" text="To use:">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="190.0" text="Edit:">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="210.0" prefHeight="78.0" prefWidth="548.0" text="product/ inventory item: Add new item information, update item information, remove item" wrapText="true">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="296.0" text="Search:">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="340.0" text="search product item by product ID or product name">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="378.0" text="search inventory item by product ID or inventory name">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="416.0" text="search category by category ID">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="454.0" text="search supplier by supplier ID">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="487.0" text="search location by location ID">
+               <font>
+                  <Font size="23.0" />
                </font>
             </Label>
       </children>
