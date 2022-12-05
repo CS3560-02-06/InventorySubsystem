@@ -44,6 +44,8 @@ public class AddInventoryController implements Initializable{
     private Button addButton;
     @FXML
     private Button removeButton;
+    @FXML
+    private Button updateButton;
 
     @FXML
     private TableView<InventoryItem> inventoryList;
@@ -156,6 +158,40 @@ public class AddInventoryController implements Initializable{
         int selectedID = inventoryList.getSelectionModel().getSelectedIndex();
         inventoryList.getItems().remove(selectedID);
 
+    }
+        /*
+    * When the update button is clicked this method is called
+    */
+    public void updateInventory(MouseEvent event) {
+        // Get the table item that is selected
+            InventoryItem clickedItem = inventoryList.getSelectionModel().getSelectedItem();
+        if(clickedItem == null) {
+            System.out.println("Please select an item"); // Add error message here
+            return;
+        }
+        System.out.println("\n\n\n\nhello");
+        
+        Date temp = new Date(1, 1, 1);
+
+        // Update item in database
+        InventoryItem updateItem = new InventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(),
+                                                    Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
+                                                    Double.parseDouble(sizeBox.getText()),colorBox.getText(), temp, temp, locationBox.getValue());
+    
+        InventoryManager.UpdateInventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(), updateItem);
+ 
+        // Update item render
+        clickedItem.setInventoryID(updateItem.getInventoryID());
+        clickedItem.setPrice(updateItem.getPrice());
+        clickedItem.setAmount(updateItem.getAmount());
+        clickedItem.setSize(updateItem.getSize());
+        clickedItem.setColor(updateItem.getColor());
+        clickedItem.setRecDate(updateItem.getRecDate());
+        clickedItem.setExpDate(updateItem.getExpDate());
+        clickedItem.setLocation(updateItem.getLocation());
+
+ 
+        inventoryList.refresh();
     }
 
 }
