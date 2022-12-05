@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,7 +22,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.Initializable;
-import java.sql.Date;
+import java.time.*;
+import java.time.temporal.*;
 
 public class AddInventoryController implements Initializable{
 
@@ -65,6 +68,10 @@ public class AddInventoryController implements Initializable{
     private TableColumn<InventoryItem, Integer> productID;
     @FXML
     private TableColumn<InventoryItem, Integer> size;
+    @FXML
+    private TableColumn<InventoryItem, LocalDate> receiptDate;
+    @FXML
+    private TableColumn<InventoryItem, LocalDate> expirationDate;
 
     @FXML
     private ChoiceBox<String> locationBox;
@@ -78,6 +85,10 @@ public class AddInventoryController implements Initializable{
     private TextField productIDBox;
     @FXML
     private TextField sizeBox;
+    @FXML
+    private DatePicker rDatePicker;
+    @FXML
+    private DatePicker eDatePicker;
 
     private int indexToInsert = 1;
     private Location[] locations;
@@ -91,6 +102,8 @@ public class AddInventoryController implements Initializable{
         locationID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Location"));
         productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
         size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Size"));
+        receiptDate.setCellValueFactory(new PropertyValueFactory<InventoryItem, LocalDate>("RecDate"));
+        expirationDate.setCellValueFactory(new PropertyValueFactory<InventoryItem, LocalDate>("ExpDate"));
         locations = InventoryManager.GetLocations();
         for (Location location : locations) {
             locationBox.getItems().add(location.GetName());
@@ -128,7 +141,6 @@ public class AddInventoryController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-        Date temp = new Date(1, 1, 1);
         int productID = Integer.parseInt(productIDBox.getText());
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)
@@ -145,9 +157,11 @@ public class AddInventoryController implements Initializable{
             }
         }
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
+        LocalDate rDate = rDatePicker.getValue();
+        LocalDate eDate = eDatePicker.getValue();
         InventoryItem inventoryItem = new InventoryItem(productID, indexToInsert,
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), temp, temp, location);
+                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), rDate, eDate, location);
         addItem(inventoryItem);
         InventoryManager.AddInventoryItem(inventoryItem);
         ++indexToInsert;
@@ -175,15 +189,15 @@ public class AddInventoryController implements Initializable{
             System.out.println("Please select an item"); // Add error message here
             return;
         }
-        System.out.println("\n\n\n\nhello");
         
-        Date temp = new Date(1, 1, 1);
+        LocalDate rDate = rDatePicker.getValue();
+        LocalDate eDate = eDatePicker.getValue();
 
         // Update item in database
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
         InventoryItem updateItem = new InventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(),
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Double.parseDouble(sizeBox.getText()),colorBox.getText(), temp, temp, location);
+                                                    Double.parseDouble(sizeBox.getText()),colorBox.getText(), rDate, eDate, location);
     
         InventoryManager.UpdateInventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(), updateItem);
  

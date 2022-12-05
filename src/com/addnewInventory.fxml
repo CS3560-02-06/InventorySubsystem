@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -13,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="563.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddInventoryController">
+<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddInventoryController">
    <children>
-      <MenuBar prefHeight="29.0" prefWidth="593.0" VBox.vgrow="NEVER">
+      <MenuBar prefHeight="29.0" prefWidth="821.0" VBox.vgrow="NEVER">
          <menus>
             <Menu mnemonicParsing="false" text="Overall" />
             <Menu mnemonicParsing="false" text="Add">
@@ -45,11 +46,11 @@
             <Menu mnemonicParsing="false" text="Help" />
          </menus>
       </MenuBar>
-      <AnchorPane prefHeight="563.0" prefWidth="593.0">
+      <AnchorPane prefHeight="535.0" prefWidth="829.0">
          <children>
-            <TextField fx:id="productIDBox" layoutX="90.0" layoutY="325.0" />
-            <Label layoutX="90.0" layoutY="300.0" text="Product ID *" />
-            <Label layoutX="228.0" layoutY="12.0" text="Inventory Item">
+            <TextField fx:id="productIDBox" layoutX="32.0" layoutY="324.0" />
+            <Label layoutX="32.0" layoutY="299.0" text="Product ID *" />
+            <Label layoutX="319.0" text="Inventory Item">
                <font>
                   <Font size="24.0" />
                </font>
@@ -64,7 +65,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="inventoryList" layoutX="25.0" layoutY="48.0" prefHeight="243.0" prefWidth="544.0">
+            <TableView fx:id="inventoryList" layoutX="25.0" layoutY="48.0" prefHeight="243.0" prefWidth="764.0">
                <columns>
                   <TableColumn fx:id="productID" prefWidth="67.8906364440918" text="Product ID" />
                   <TableColumn fx:id="inventoryID" prefWidth="75.74687957763672" text="Inventory ID" />
@@ -72,24 +73,30 @@
                   <TableColumn fx:id="amount" prefWidth="81.75628662109375" text="Amount" />
                   <TableColumn fx:id="size" prefWidth="68.03207397460938" text="Size" />
                   <TableColumn fx:id="color" minWidth="4.467926025390625" prefWidth="79.25628662109375" text="Color" />
+                  <TableColumn fx:id="receiptDate" prefWidth="109.60009765625" text="Reciept Date" />
+                  <TableColumn fx:id="expirationDate" prefWidth="109.60009765625" text="Expiration Date" />
                   <TableColumn fx:id="locationID" prefWidth="94.24371337890625" text="Location ID" />
                </columns>
             </TableView>
-            <Label layoutX="90.0" layoutY="359.0" text="Price *" />
-            <TextField fx:id="priceBox" layoutX="90.0" layoutY="380.0" />
-            <Label layoutX="90.0" layoutY="414.0" text="Size *" />
-            <TextField fx:id="sizeBox" layoutX="90.0" layoutY="437.0" />
-            <Label layoutX="320.0" layoutY="300.0" text="Amount in stock *" />
-            <TextField fx:id="amountBox" layoutX="320.0" layoutY="325.0" />
-            <Label layoutX="320.0" layoutY="414.0" text="Location ID*" />
-            <Label layoutX="320.0" layoutY="359.0" text="Color  *" />
-            <TextField fx:id="colorBox" layoutX="320.0" layoutY="380.0" />
-            <ChoiceBox fx:id="locationBox" layoutX="320.0" layoutY="437.0" prefHeight="26.0" prefWidth="161.0" />
+            <Label layoutX="32.0" layoutY="358.0" text="Price *" />
+            <TextField fx:id="priceBox" layoutX="32.0" layoutY="379.0" />
+            <Label layoutX="32.0" layoutY="413.0" text="Size *" />
+            <TextField fx:id="sizeBox" layoutX="32.0" layoutY="436.0" />
+            <Label layoutX="224.0" layoutY="299.0" text="Amount in stock *" />
+            <TextField fx:id="amountBox" layoutX="224.0" layoutY="324.0" />
+            <Label layoutX="224.0" layoutY="413.0" text="Location ID*" />
+            <Label layoutX="224.0" layoutY="358.0" text="Color  *" />
+            <TextField fx:id="colorBox" layoutX="224.0" layoutY="379.0" />
+            <ChoiceBox fx:id="locationBox" layoutX="224.0" layoutY="435.0" prefHeight="26.0" prefWidth="150.0" />
             <Button fx:id="updateButton" layoutX="238.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
+            <DatePicker fx:id="rDatePicker" layoutX="411.0" layoutY="323.0" prefHeight="26.0" prefWidth="150.0" />
+            <DatePicker fx:id="eDatePicker" layoutX="412.0" layoutY="378.0" prefHeight="26.0" prefWidth="150.0" />
+            <Label layoutX="412.0" layoutY="299.0" text="Receipt Date*" />
+            <Label layoutX="412.0" layoutY="358.0" text="Expiration Date*" />
          </children>
       </AnchorPane>
    </children>

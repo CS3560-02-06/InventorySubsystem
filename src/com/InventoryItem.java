@@ -1,6 +1,6 @@
 package com;
 
-import java.sql.Date;
+import java.time.*;
 
 public class InventoryItem
 {
@@ -10,13 +10,13 @@ public class InventoryItem
    int amountInStock;
    double size;
    String color;
-   Date receiptDate;
-   Date expirationDate;
+   LocalDate receiptDate;
+   LocalDate expirationDate;
    int locationID;
 
 
    // Constructor
-   public InventoryItem(int newPID, int newIID, double newPrice, int newAmount, double newSize, String newColor, Date newRDate, Date newEDate, int newLoc)
+   public InventoryItem(int newPID, int newIID, double newPrice, int newAmount, double newSize, String newColor, LocalDate newRDate, LocalDate newEDate, int newLoc)
    {
       productID = newPID;
       inventoryID = newIID;
@@ -38,8 +38,8 @@ public class InventoryItem
    public int getAmount(){return amountInStock;}
    public double getSize(){return size;}
    public String getColor(){return color;}
-   public Date getRecDate(){return receiptDate;}
-   public Date getExpDate(){return expirationDate;}
+   public LocalDate getRecDate(){return receiptDate;}
+   public LocalDate getExpDate(){return expirationDate;}
    public int getLocation(){return locationID;}
 
    // Setters
@@ -49,7 +49,7 @@ public class InventoryItem
    public void setAmount(int newAmount){amountInStock = newAmount;}
    public void setSize(double newSize){size = newSize;}
    public void setColor(String newColor){color = newColor;}
-   public void setRecDate(Date newDate){receiptDate = newDate;}
-   public void setExpDate(Date newDate){expirationDate = newDate;}
+   public void setRecDate(LocalDate newDate){receiptDate = newDate;}
+   public void setExpDate(LocalDate newDate){expirationDate = newDate;}
    public void setLocation(int newLocID){locationID = newLocID;}
 }

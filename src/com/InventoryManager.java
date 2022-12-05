@@ -46,27 +46,27 @@ public class InventoryManager extends Application
 
          // TEST STUFF REMOVE LATER
 
-         ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
-         AddProductItem(newP);
-         newP = new ProductItem(2, "among us", 1, 2, "gama");
-         AddProductItem(newP);
-         newP = new ProductItem(3, "among us", 1, 2, "gama");
-         AddProductItem(newP);
-         Date newDate = new Date(1, 1, 1);
-         InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
-         AddInventoryItem(newItem);
-         InventoryItem newerItem = new InventoryItem(1, 2, 5.6, 1, 3.5, "RED", newDate, newDate, 0);
-         UpdateInventoryItem(1, 1, newerItem);
-         newItem = new InventoryItem(1, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
-         AddInventoryItem(newItem);
-         ProductItem pi = SearchForProduct(1);
-         System.out.println(pi.getName());
-         ProductItem[] pis = SearchForProduct("among us");
-         System.out.println(pis.length);
-         InventoryItem II = SearchForInventoryItem(1, 1);
-         System.out.println(II.getPrice());
-         InventoryItem[] IIs = SearchForInventoryItem(1);
-         System.out.println(IIs.length);
+         // ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
+         // AddProductItem(newP);
+         // newP = new ProductItem(2, "among us", 1, 2, "gama");
+         // AddProductItem(newP);
+         // newP = new ProductItem(3, "among us", 1, 2, "gama");
+         // AddProductItem(newP);
+         // Date newDate = new Date(1, 1, 1);
+         // InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
+         // AddInventoryItem(newItem);
+         // InventoryItem newerItem = new InventoryItem(1, 2, 5.6, 1, 3.5, "RED", newDate, newDate, 0);
+         // UpdateInventoryItem(1, 1, newerItem);
+         // newItem = new InventoryItem(1, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
+         // AddInventoryItem(newItem);
+         // ProductItem pi = SearchForProduct(1);
+         // System.out.println(pi.getName());
+         // ProductItem[] pis = SearchForProduct("among us");
+         // System.out.println(pis.length);
+         // InventoryItem II = SearchForInventoryItem(1, 1);
+         // System.out.println(II.getPrice());
+         // InventoryItem[] IIs = SearchForInventoryItem(1);
+         // System.out.println(IIs.length);
 
          // TEST STUFF REMOVE LATER
 
@@ -273,7 +273,7 @@ public class InventoryManager extends Application
          {
             InventoryItem inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
                                              rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
-                                             rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+                                             rs.getDate("reciept_date").toLocalDate(), rs.getDate("expiration_date").toLocalDate(), rs.getInt("location_id_FK"));
             result[currRow] = inventoryItem;
             ++currRow;
          }
@@ -519,7 +519,7 @@ public class InventoryManager extends Application
          rs.next();
          inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
                                           rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
-                                          rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+                                          rs.getDate("reciept_date").toLocalDate(), rs.getDate("expiration_date").toLocalDate(), rs.getInt("location_id_FK"));
          return inventoryItem;
                   
       }
@@ -547,7 +547,7 @@ public class InventoryManager extends Application
          {
             InventoryItem inventoryItem = new InventoryItem(rs.getInt("product_id_FK"), rs.getInt("inventory_id"), rs.getDouble("price"),
                                              rs.getInt("amount_in_stock"), rs.getDouble("size"), rs.getString("color"),
-                                             rs.getDate("reciept_date"), rs.getDate("expiration_date"), rs.getInt("location_id_FK"));
+                                             rs.getDate("reciept_date").toLocalDate(), rs.getDate("expiration_date").toLocalDate(), rs.getInt("location_id_FK"));
             inventoryItems.add(inventoryItem);
          }
          Object[] objArray = inventoryItems.toArray();
