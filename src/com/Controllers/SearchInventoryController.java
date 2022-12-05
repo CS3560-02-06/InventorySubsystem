@@ -12,14 +12,19 @@ import com.ProductItem;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
 import java.time.*;
@@ -75,6 +80,9 @@ public class SearchInventoryController implements Initializable{
     @FXML
     private TableColumn<InventoryItem, Integer> locationID;
 
+    @FXML
+    private AnchorPane myAnchorPane;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         price.setCellValueFactory(new PropertyValueFactory<InventoryItem, Double>("Price"));
@@ -117,14 +125,28 @@ public class SearchInventoryController implements Initializable{
         m.ChangeScene("com/SearchInventory.fxml");
     }
 
-    public void search(MouseEvent event) {
+    public void search(MouseEvent event) 
+    {
         inventoryList.getItems().clear();
         int productID = -1;
         int inventoryID = -1;
+
         if(!productIDBox.getText().isEmpty())
         {
             productID = Integer.valueOf(productIDBox.getText());
         }
+        else
+        {
+            Stage stage = (Stage) myAnchorPane.getScene().getWindow();
+            Alert errorAlert = new Alert(AlertType.ERROR);
+            errorAlert.initModality(Modality.APPLICATION_MODAL);
+            errorAlert.initOwner(stage);
+
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Please...(do something)");
+            errorAlert.showAndWait();
+        }
+
         if(!inventoryIDBox.getText().isEmpty())
         {
             inventoryID = Integer.valueOf(inventoryIDBox.getText());
