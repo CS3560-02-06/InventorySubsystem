@@ -71,12 +71,12 @@
             </TableView>
             <Label layoutX="135.0" layoutY="358.0" text="Price *" />
             <TextField fx:id="priceBox" layoutX="135.0" layoutY="379.0" />
-            <Label layoutX="135.0" layoutY="413.0" text="Size *" />
+            <Label layoutX="135.0" layoutY="413.0" text="Size" />
             <TextField fx:id="sizeBox" layoutX="135.0" layoutY="436.0" />
             <Label layoutX="327.0" layoutY="299.0" text="Amount in stock *" />
             <TextField fx:id="amountBox" layoutX="327.0" layoutY="324.0" />
-            <Label layoutX="327.0" layoutY="413.0" text="Location ID*" />
-            <Label layoutX="327.0" layoutY="358.0" text="Color  *" />
+            <Label layoutX="327.0" layoutY="413.0" text="Location ID *" />
+            <Label layoutX="327.0" layoutY="358.0" text="Color " />
             <TextField fx:id="colorBox" layoutX="327.0" layoutY="379.0" />
             <ChoiceBox fx:id="locationBox" layoutX="327.0" layoutY="435.0" prefHeight="26.0" prefWidth="150.0" />
             <Button fx:id="updateButton" layoutX="361.0" layoutY="483.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
@@ -86,8 +86,8 @@
             </Button>
             <DatePicker fx:id="rDatePicker" layoutX="514.0" layoutY="323.0" prefHeight="26.0" prefWidth="150.0" />
             <DatePicker fx:id="eDatePicker" layoutX="515.0" layoutY="378.0" prefHeight="26.0" prefWidth="150.0" />
-            <Label layoutX="515.0" layoutY="299.0" text="Receipt Date*" />
-            <Label layoutX="515.0" layoutY="358.0" text="Expiration Date*" />
+            <Label layoutX="515.0" layoutY="299.0" text="Receipt Date *" />
+            <Label layoutX="515.0" layoutY="358.0" text="Expiration Date" />
             <ChoiceBox fx:id="productIDBox" layoutX="135.0" layoutY="324.0" prefWidth="150.0" />
          </children>
       </AnchorPane>

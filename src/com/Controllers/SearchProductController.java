@@ -127,7 +127,7 @@ public class SearchProductController implements Initializable{
             errorAlert.initOwner(stage);
 
             errorAlert.setHeaderText("Input not valid");
-            errorAlert.setContentText("Please...(do something)");
+            errorAlert.setContentText("Please check all required fields.");
             errorAlert.showAndWait();
             return;
         }
