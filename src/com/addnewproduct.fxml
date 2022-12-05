@@ -18,7 +18,11 @@
    <children>
       <MenuBar>
          <menus>
-            <Menu mnemonicParsing="false" text="Overall" />
+            <Menu mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem fx:id="userGuide" mnemonicParsing="false" onAction="#SelectUserGuide" text="User Guide" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                <items>
                   <MenuItem fx:id="producctItem" mnemonicParsing="false" onAction="#SelectProductItem" text="Product Item" />
@@ -29,9 +33,9 @@
                <items>
                   <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Product Item" />
                   <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Inventory Item" />
+                  <MenuItem fx:id="searchSupplier" mnemonicParsing="false" onAction="#SelectSearchSupplier" text="Supplier ID" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help" />
          </menus>
       </MenuBar>
       <AnchorPane prefHeight="535.0" prefWidth="593.0">

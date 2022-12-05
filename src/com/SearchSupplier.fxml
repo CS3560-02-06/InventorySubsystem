@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchProductController">
+<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchSupplierController">
    <children>
       <MenuBar>
          <menus>
@@ -70,29 +70,26 @@
       </MenuBar>
       <AnchorPane prefHeight="541.0" prefWidth="593.0">
          <children>
-            <TextField fx:id="productIDBox" layoutX="183.0" layoutY="437.0" promptText="Enter Product ID" />
-            <Label layoutX="183.0" layoutY="412.0" text="Product ID" />
-            <Label layoutX="291.0" layoutY="12.0" text="Search Product Item">
+            <TextField fx:id="supplierIDBox" layoutX="310.0" layoutY="430.0" promptText="Enter Supplier ID" />
+            <Label layoutX="310.0" layoutY="405.0" text="Supplier ID" />
+            <Label layoutX="304.0" layoutY="8.0" text="Search Supplier">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="431.0" layoutY="412.0" text="Product Name" />
             <Button fx:id="addButton" layoutX="323.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#search" prefHeight="40.0" prefWidth="134.0" style="-fx-background-color: skyblue;" text="Search" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="productList" layoutX="32.0" layoutY="48.0" prefHeight="344.0" prefWidth="753.0">
+            <TableView fx:id="supplierList" layoutX="139.0" layoutY="47.0" prefHeight="344.0" prefWidth="522.0">
                <columns>
-                  <TableColumn fx:id="productID" prefWidth="77.0" text="Product ID" />
-                  <TableColumn fx:id="name" prefWidth="130.34244537353516" text="Product Name" />
-                  <TableColumn fx:id="categoryID" prefWidth="128.15066528320312" text="Category ID" />
-                  <TableColumn fx:id="supplierID" prefWidth="129.09576416015625" text="Supplier ID" />
-                  <TableColumn fx:id="description" prefWidth="299.5000305175781" text="Description" />
+                  <TableColumn fx:id="supplierID" prefWidth="77.0" text="Supplier ID" />
+                  <TableColumn fx:id="supplierName" prefWidth="139.7813491821289" text="Supplier Name" />
+                  <TableColumn fx:id="phone" prefWidth="133.21861267089844" text="Phone" />
+                  <TableColumn fx:id="email" prefWidth="171.95333862304688" text="Email" />
                </columns>
             </TableView>
-            <TextField fx:id="nameBox" layoutX="430.0" layoutY="436.0" promptText="Enter Product Name" />
          </children>
       </AnchorPane>
    </children>

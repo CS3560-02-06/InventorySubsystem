@@ -34,6 +34,10 @@ public class AddProductController implements Initializable{
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
+    private MenuItem searchSupplier;
 
     @FXML
     private Button addButton;
@@ -65,12 +69,6 @@ public class AddProductController implements Initializable{
 
     @FXML
     private TextField nameBox;
-
-    // @FXML
-    // private TextField supplierBox;
-
-    // @FXML
-    // private TextField categoryBox;
 
 
     @FXML
@@ -134,6 +132,17 @@ public class AddProductController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+
+    public void SelectUserGuide(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/homePage.fxml");
+    }
+
+    public void SelectSearchSupplier(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchSupplier.fxml");
+    }
+    
     public void selectCategory()
     {
 
