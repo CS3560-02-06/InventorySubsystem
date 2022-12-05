@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchSupplierController">
+   <children>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem fx:id="userGuide" mnemonicParsing="false" onAction="#SelectUserGuide" text="User Guide" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem fx:id="producctItem" mnemonicParsing="false" onAction="#SelectProductItem" text="Product Item" />
+                  <MenuItem fx:id="inventoryItem" mnemonicParsing="false" onAction="#SelectInventoryItem" text="Inventory Item" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Search">
+               <items>
+                  <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Product Item" />
+                  <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Inventory Item" />
+                  <MenuItem fx:id="searchSupplier" mnemonicParsing="false" onAction="#SelectSearchSupplier" text="Supplier ID" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane fx:id="myAnchorPane" prefHeight="541.0" prefWidth="593.0">
+         <children>
+            <TextField fx:id="supplierIDBox" layoutX="310.0" layoutY="430.0" promptText="Enter Location ID" />
+            <Label layoutX="310.0" layoutY="405.0" text="Location ID *" />
+            <Label layoutX="304.0" layoutY="8.0" text="Search Location">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="searchButton" layoutX="323.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#search" prefHeight="40.0" prefWidth="134.0" style="-fx-background-color: skyblue;" text="Search" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <TableView fx:id="supplierList" layoutX="139.0" layoutY="47.0" prefHeight="344.0" prefWidth="522.0">
+               <columns>
+                  <TableColumn fx:id="locationID" prefWidth="260.79998779296875" text="Location ID" />
+                  <TableColumn fx:id="locationName" prefWidth="260.79998779296875" text="Location Name" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
