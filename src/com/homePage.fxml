@@ -62,12 +62,12 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="175.0" layoutY="-20.0" prefHeight="111.0" prefWidth="273.0" style="&#10;" text="Welcome" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
+        <Label alignment="CENTER" layoutX="160.0" layoutY="66.0" prefHeight="111.0" prefWidth="273.0" style="&#10;" text="Welcome" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
           <font>
             <Font size="36.0" />
           </font>
         </Label>
-            <Label alignment="CENTER" layoutX="-54.0" layoutY="21.0" prefHeight="90.0" prefWidth="273.0" style="&#10;" text="User Guide:" wrapText="false">
+            <Label alignment="CENTER" layoutX="-31.0" layoutY="177.0" prefHeight="90.0" prefWidth="273.0" style="&#10;" text="User Guide:" wrapText="false">
                <font>
                   <Font size="24.0" />
                </font>
