@@ -648,9 +648,9 @@ public class InventoryManager extends Application
       int id = -1;
       for (int i = 0; i < suppliers.length; i++)
       {
-          if(suppliers[i].GetName().equals(target))
+          if(suppliers[i].getName().equals(target))
           {
-              id = suppliers[i].GetSupplierID();
+              id = suppliers[i].getSupplierID();
               break;
           }
       }
@@ -661,9 +661,9 @@ public class InventoryManager extends Application
       int id = -1;
       for (int i = 0; i < categories.length; i++)
       {
-          if(categories[i].GetName().equals(target))
+          if(categories[i].getName().equals(target))
           {
-              id = categories[i].GetCategoryID();
+              id = categories[i].getCategoryID();
               break;
           }
       }
@@ -674,9 +674,9 @@ public class InventoryManager extends Application
       int id = -1;
       for (int i = 0; i < locations.length; i++)
       {
-          if(locations[i].GetName().equals(target))
+          if(locations[i].getName().equals(target))
           {
-              id = locations[i].GetLocationID();
+              id = locations[i].getLocation();
               break;
           }
       }

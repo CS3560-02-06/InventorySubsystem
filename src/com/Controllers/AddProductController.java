@@ -99,11 +99,11 @@ public class AddProductController implements Initializable{
         suppliers = InventoryManager.GetSuppliers();
         for (Supplier supplier : suppliers)
         {
-            supplierBox.getItems().add(supplier.GetName());
+            supplierBox.getItems().add(supplier.getName());
         }
         categories = InventoryManager.GetCategories();
         for (Category category : categories) {
-            categoryBox.getItems().addAll(category.GetName());
+            categoryBox.getItems().addAll(category.getName());
         }
 
         ProductItem[] allItems = InventoryManager.GetProductItems();
@@ -166,13 +166,13 @@ public class AddProductController implements Initializable{
             return;
         }
         nameBox.setText(clickedItem.getName());
-        categoryBox.setValue(InventoryManager.SearchForCategory(clickedItem.getCategory()).GetName());
-        supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).GetName());
+        categoryBox.setValue(InventoryManager.SearchForCategory(clickedItem.getCategory()).getName());
+        supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).getName());
         descriptionBox.setText(clickedItem.getDesc());
     }
     public void add(MouseEvent event) 
     {
-        if(nameBox.getText().isEmpty() || categoryBox.getValue().isEmpty() || supplierBox.getValue().isEmpty())
+        if(nameBox.getText().isEmpty() || categoryBox.getValue() == null || supplierBox.getValue() == null)
         {
             Stage stage = (Stage) myAnchorPane.getScene().getWindow();
             Alert errorAlert = new Alert(AlertType.ERROR);
@@ -182,6 +182,7 @@ public class AddProductController implements Initializable{
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
+            return;
         }
         
         int category = InventoryManager.FindCategory(categories, categoryBox.getValue());

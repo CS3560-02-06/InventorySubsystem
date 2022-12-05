@@ -60,10 +60,10 @@ public class SearchSupplierController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        supplierID.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("SupplierID"));
-        supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
-        phone.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Phone"));
-        email.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Email"));
+        supplierID.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("supplierID"));
+        supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("name"));
+        phone.setCellValueFactory(new PropertyValueFactory<Supplier, String>("phone"));
+        email.setCellValueFactory(new PropertyValueFactory<Supplier, String>("email"));
 
         Supplier[] allItems = InventoryManager.GetSuppliers();
         for (int i = 0; i < allItems.length; ++i) {
