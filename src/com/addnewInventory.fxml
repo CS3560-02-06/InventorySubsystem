@@ -16,31 +16,19 @@
 
 <VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddInventoryController">
    <children>
-      <MenuBar prefHeight="29.0" prefWidth="821.0" VBox.vgrow="NEVER">
+      <MenuBar>
          <menus>
             <Menu mnemonicParsing="false" text="Overall" />
-            <Menu mnemonicParsing="false" text="Add">
+            <Menu mnemonicParsing="false" text="Edit">
                <items>
-                  <MenuItem fx:id="addProduct1" mnemonicParsing="false" onAction="#SelectAddProduct" text="Add new product" />
-                  <MenuItem fx:id="addInventory1" mnemonicParsing="false" onAction="#SelectAddInventory" text="Add new inventory item" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Update">
-               <items>
-                  <MenuItem fx:id="updateProduct1" mnemonicParsing="false" text="Update product information" />
-                  <MenuItem fx:id="updateInventory1" mnemonicParsing="false" text="Update inventory information" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Remove">
-               <items>
-                  <MenuItem fx:id="removeProduct1" mnemonicParsing="false" text="Remove product" />
-                  <MenuItem fx:id="removeInventory1" mnemonicParsing="false" text="Remove inventory item" />
+                  <MenuItem fx:id="producctItem" mnemonicParsing="false" onAction="#SelectProductItem" text="Product Item" />
+                  <MenuItem fx:id="inventoryItem" mnemonicParsing="false" onAction="#SelectInventoryItem" text="Inventory Item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Search">
                <items>
-                  <MenuItem fx:id="searchProduct1" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Search product" />
-                  <MenuItem fx:id="searchInventory1" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Search inventory item" />
+                  <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Product Item" />
+                  <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Inventory Item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Help" />
@@ -48,18 +36,19 @@
       </MenuBar>
       <AnchorPane prefHeight="535.0" prefWidth="829.0">
          <children>
-            <Label layoutX="32.0" layoutY="299.0" text="Product ID *" />
-            <Label layoutX="319.0" text="Inventory Item">
+            <TextField fx:id="productIDBox" layoutX="135.0" layoutY="324.0" />
+            <Label layoutX="135.0" layoutY="299.0" text="Product ID *" />
+            <Label layoutX="319.0" layoutY="9.0" text="Inventory Item">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="addButton" layoutX="83.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: skyblue;" text="Add" textFill="WHITE">
+            <Button fx:id="addButton" layoutX="206.0" layoutY="483.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: skyblue;" text="Add" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="removeButton" layoutX="391.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#remove" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Remove" textFill="WHITE">
+            <Button fx:id="removeButton" layoutX="514.0" layoutY="483.0" mnemonicParsing="false" onMouseClicked="#remove" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: gray;" text="Remove" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -77,26 +66,25 @@
                   <TableColumn fx:id="locationID" prefWidth="94.24371337890625" text="Location ID" />
                </columns>
             </TableView>
-            <Label layoutX="32.0" layoutY="358.0" text="Price *" />
-            <TextField fx:id="priceBox" layoutX="32.0" layoutY="379.0" />
-            <Label layoutX="32.0" layoutY="413.0" text="Size *" />
-            <TextField fx:id="sizeBox" layoutX="32.0" layoutY="436.0" />
-            <Label layoutX="224.0" layoutY="299.0" text="Amount in stock *" />
-            <TextField fx:id="amountBox" layoutX="224.0" layoutY="324.0" />
-            <Label layoutX="224.0" layoutY="413.0" text="Location ID*" />
-            <Label layoutX="224.0" layoutY="358.0" text="Color  *" />
-            <TextField fx:id="colorBox" layoutX="224.0" layoutY="379.0" />
-            <ChoiceBox fx:id="locationBox" layoutX="224.0" layoutY="435.0" prefHeight="26.0" prefWidth="150.0" />
-            <Button fx:id="updateButton" layoutX="238.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
+            <Label layoutX="135.0" layoutY="358.0" text="Price *" />
+            <TextField fx:id="priceBox" layoutX="135.0" layoutY="379.0" />
+            <Label layoutX="135.0" layoutY="413.0" text="Size *" />
+            <TextField fx:id="sizeBox" layoutX="135.0" layoutY="436.0" />
+            <Label layoutX="327.0" layoutY="299.0" text="Amount in stock *" />
+            <TextField fx:id="amountBox" layoutX="327.0" layoutY="324.0" />
+            <Label layoutX="327.0" layoutY="413.0" text="Location ID*" />
+            <Label layoutX="327.0" layoutY="358.0" text="Color  *" />
+            <TextField fx:id="colorBox" layoutX="327.0" layoutY="379.0" />
+            <ChoiceBox fx:id="locationBox" layoutX="327.0" layoutY="435.0" prefHeight="26.0" prefWidth="150.0" />
+            <Button fx:id="updateButton" layoutX="361.0" layoutY="483.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <DatePicker fx:id="rDatePicker" layoutX="411.0" layoutY="323.0" prefHeight="26.0" prefWidth="150.0" />
-            <DatePicker fx:id="eDatePicker" layoutX="412.0" layoutY="378.0" prefHeight="26.0" prefWidth="150.0" />
-            <Label layoutX="412.0" layoutY="299.0" text="Receipt Date*" />
-            <Label layoutX="412.0" layoutY="358.0" text="Expiration Date*" />
-            <ChoiceBox fx:id="productIDBox" layoutX="32.0" layoutY="324.0" prefWidth="150.0" />
+            <DatePicker fx:id="rDatePicker" layoutX="514.0" layoutY="323.0" prefHeight="26.0" prefWidth="150.0" />
+            <DatePicker fx:id="eDatePicker" layoutX="515.0" layoutY="378.0" prefHeight="26.0" prefWidth="150.0" />
+            <Label layoutX="515.0" layoutY="299.0" text="Receipt Date*" />
+            <Label layoutX="515.0" layoutY="358.0" text="Expiration Date*" />
          </children>
       </AnchorPane>
    </children>

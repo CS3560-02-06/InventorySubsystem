@@ -30,21 +30,14 @@ import java.time.temporal.*;
 public class AddInventoryController implements Initializable{
 
     @FXML
-    private MenuItem addProduct;
+    private MenuItem producItem;
     @FXML
-    private MenuItem addInventory;
+    private MenuItem inventoryItem;
     @FXML
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
-    @FXML
-    private MenuItem removeInventory;
-    @FXML
-    private MenuItem removeProduct;
-    @FXML
-    private MenuItem updateInventory;
-    @FXML
-    private MenuItem updateProduct;
+
 
     @FXML
     private Button addButton;
@@ -142,12 +135,12 @@ public class AddInventoryController implements Initializable{
 
     }
 
-    public void SelectAddProduct(ActionEvent event) throws IOException {
+    public void SelectProductItem(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/addnewproduct.fxml");
     }
 
-    public void SelectAddInventory(ActionEvent event) throws IOException {
+    public void SelectInventoryItem(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/addnewInventory.fxml");
     }
