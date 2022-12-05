@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
+import java.time.*;
 
 public class SearchInventoryController implements Initializable{
 
@@ -68,9 +69,9 @@ public class SearchInventoryController implements Initializable{
     @FXML
     private TableColumn<InventoryItem, String> color;
     @FXML
-    private TableColumn<InventoryItem, Date> receiptDate;
+    private TableColumn<InventoryItem, LocalDate> receiptDate;
     @FXML
-    private TableColumn<InventoryItem, Date> expirationDate;
+    private TableColumn<InventoryItem, LocalDate> expirationDate;
     @FXML
     private TableColumn<InventoryItem, Integer> locationID;
 
@@ -83,6 +84,8 @@ public class SearchInventoryController implements Initializable{
         locationID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Location"));
         productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
         size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Double>("Size"));
+        receiptDate.setCellValueFactory(new PropertyValueFactory<InventoryItem, LocalDate>("RecDate"));
+        expirationDate.setCellValueFactory(new PropertyValueFactory<InventoryItem, LocalDate>("ExpDate"));
 
         InventoryItem[] allItems = InventoryManager.GetInventoryItems();
         for (int i = 0; i < allItems.length; ++i) {
