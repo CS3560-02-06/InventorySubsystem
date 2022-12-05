@@ -69,7 +69,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="productList" layoutX="20.0" layoutY="43.0" prefHeight="243.0" prefWidth="778.0">
+            <TableView fx:id="productList" layoutX="20.0" layoutY="43.0" onMouseClicked="#select" prefHeight="243.0" prefWidth="778.0">
               <columns>
                 <TableColumn fx:id="productID" prefWidth="77.0" text="Product ID" />
                 <TableColumn fx:id="name" prefWidth="144.72964477539062" text="Product Name" />

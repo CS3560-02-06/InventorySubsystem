@@ -73,7 +73,7 @@
       <AnchorPane fx:id="myAnchorPane" prefHeight="541.0" prefWidth="593.0">
          <children>
             <TextField fx:id="supplierIDBox" layoutX="310.0" layoutY="430.0" promptText="Enter Supplier ID" />
-            <Label layoutX="310.0" layoutY="405.0" text="Supplier ID" />
+            <Label layoutX="310.0" layoutY="405.0" text="Supplier ID *" />
             <Label layoutX="304.0" layoutY="8.0" text="Search Supplier">
                <font>
                   <Font size="24.0" />

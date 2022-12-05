@@ -63,7 +63,7 @@ public class SearchCategoryController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        categoryID.setCellValueFactory(new PropertyValueFactory<Category, Integer>("category"));
+        categoryID.setCellValueFactory(new PropertyValueFactory<Category, Integer>("categoryID"));
         categoryName.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
 
         Category[] allItems = InventoryManager.GetCategories();

@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchSupplierController">
+<VBox prefHeight="563.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchLocationController">
    <children>
       <MenuBar>
          <menus>
@@ -72,7 +72,7 @@
       </MenuBar>
       <AnchorPane fx:id="myAnchorPane" prefHeight="541.0" prefWidth="593.0">
          <children>
-            <TextField fx:id="supplierIDBox" layoutX="310.0" layoutY="430.0" promptText="Enter Location ID" />
+            <TextField fx:id="locationIDBox" layoutX="310.0" layoutY="430.0" promptText="Enter Location ID" />
             <Label layoutX="310.0" layoutY="405.0" text="Location ID *" />
             <Label layoutX="304.0" layoutY="8.0" text="Search Location">
                <font>
@@ -84,7 +84,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <TableView fx:id="supplierList" layoutX="139.0" layoutY="47.0" prefHeight="344.0" prefWidth="522.0">
+            <TableView fx:id="locationList" layoutX="139.0" layoutY="47.0" prefHeight="344.0" prefWidth="522.0">
                <columns>
                   <TableColumn fx:id="locationID" prefWidth="260.79998779296875" text="Location ID" />
                   <TableColumn fx:id="locationName" prefWidth="260.79998779296875" text="Location Name" />

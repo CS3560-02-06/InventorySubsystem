@@ -642,6 +642,19 @@ public class InventoryManager extends Application
       }
       return null;
    }
+   public static int FindProduct(ProductItem[] products, String target)
+   {
+      int id = -1;
+      for (int i = 0; i < products.length; i++)
+      {
+          if(products[i].getName().equals(target))
+          {
+              id = products[i].getProductID();
+              break;
+          }
+      }
+      return id;
+   }
 
    public static int FindSupplier(Supplier[] suppliers, String target)
    {

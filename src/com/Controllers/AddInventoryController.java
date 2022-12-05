@@ -262,7 +262,7 @@ public class AddInventoryController implements Initializable{
         
         LocalDate rDate = rDatePicker.getValue();
         LocalDate eDate = eDatePicker.getValue();
-        int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
+        int productID = InventoryManager.FindProduct(products, productIDBox.getValue());
 
         // Update item in database
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
