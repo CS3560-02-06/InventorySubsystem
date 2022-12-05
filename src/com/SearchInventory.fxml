@@ -68,7 +68,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane prefHeight="541.0" prefWidth="719.0">
+      <AnchorPane fx:id="myAnchorPane" prefHeight="541.0" prefWidth="719.0">
          <children>
             <TextField fx:id="productIDBox" layoutX="176.0" layoutY="433.0" promptText="Enter Product ID" />
             <Label layoutX="176.0" layoutY="408.0" text="Product ID" />

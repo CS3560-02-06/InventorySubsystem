@@ -133,10 +133,9 @@ public class SearchInventoryController implements Initializable{
     }
 
     public void search(MouseEvent event) {
-        inventoryList.getItems().clear();
+
         int productID = -1;
         int inventoryID = -1;
-
         if(!productIDBox.getText().isEmpty())
         {
             productID = Integer.valueOf(productIDBox.getText());
@@ -153,6 +152,7 @@ public class SearchInventoryController implements Initializable{
             errorAlert.showAndWait();
             return;
         }
+        inventoryList.getItems().clear();
 
         if(!inventoryIDBox.getText().isEmpty())
         {
@@ -171,6 +171,10 @@ public class SearchInventoryController implements Initializable{
         else if(inventoryID == -1)
         {
             inventoryItemList = InventoryManager.SearchForInventoryItem(productID);
+            if(inventoryItemList == null)
+            {
+                return;
+            }
             for (InventoryItem II : inventoryItemList)
             {
                 addItem(II);
@@ -180,6 +184,10 @@ public class SearchInventoryController implements Initializable{
         else
         {
             inventoryItem = InventoryManager.SearchForInventoryItem(productID, inventoryID);
+            if(inventoryItem == null)
+            {
+                return;
+            }
             addItem(inventoryItem);
             //If inventoryItme is found
         }
