@@ -97,7 +97,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label layoutX="31.0" layoutY="296.0" text="Search:">
+            <Label layoutX="31.0" layoutY="303.0" prefHeight="28.0" prefWidth="526.0" text="Search: (prestore information will show on this page)">
                <font>
                   <Font size="23.0" />
                </font>
