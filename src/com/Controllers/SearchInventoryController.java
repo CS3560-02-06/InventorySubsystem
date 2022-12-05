@@ -23,7 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
 
-public class SearchInventoryController {
+public class SearchInventoryController implements Initializable{
 
     @FXML
     private MenuItem addProduct;
@@ -51,7 +51,7 @@ public class SearchInventoryController {
     private TextField inventoryIDBox;
 
     @FXML
-    private TableView<InventoryItem> InventoryList;
+    private TableView<InventoryItem> inventoryList;
 
     @FXML
     private TableColumn<InventoryItem, Integer> productID;
@@ -59,6 +59,8 @@ public class SearchInventoryController {
     private TableColumn<InventoryItem, Integer> inventoryID;
     @FXML
     private TableColumn<InventoryItem, Double> price;
+    @FXML
+    private TableColumn<InventoryItem, Integer> amount;
     @FXML
     private TableColumn<InventoryItem, Integer> amountInStock;
     @FXML
@@ -72,25 +74,21 @@ public class SearchInventoryController {
     @FXML
     private TableColumn<InventoryItem, Integer> locationID;
 
-    // @Override
-    // public void initialize(URL url, ResourceBundle resourceBundle){
-    //     productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
-    //     name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
-    //     categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
-    //     supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
-    //     description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
-    //     supplierBox.getItems().addAll(1,2,3);
-    //     categoryBox.getItems().addAll(1,2,3);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        price.setCellValueFactory(new PropertyValueFactory<InventoryItem, Double>("Price"));
+        amount.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Amount"));
+        color.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("Color"));
+        inventoryID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("InventoryID"));
+        locationID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Location"));
+        productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
+        size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Double>("Size"));
 
-    //     ProductItem[] allItems = InventoryManager.GetProductItems();
-    //     for (int i = 0; i < allItems.length; ++i) {
-    //         addItem(allItems[i]);
-    //         if(i == allItems.length-1)
-    //         {
-    //             indexToInsert = allItems[i].getProductID() + 1;
-    //         }
-    //     }
-    // }
+        InventoryItem[] allItems = InventoryManager.GetInventoryItems();
+        for (int i = 0; i < allItems.length; ++i) {
+            addItem(allItems[i]);
+        }
+    }
     
     public SearchInventoryController() {
 
@@ -117,31 +115,48 @@ public class SearchInventoryController {
     }
 
     public void search(MouseEvent event) {
+        inventoryList.getItems().clear();
         int productID = -1;
         int inventoryID = -1;
-        productID = Integer.valueOf(productIDBox.getText());
-        inventoryID = Integer.valueOf(inventoryIDBox.getText());
-
+        if(!productIDBox.getText().isEmpty())
+        {
+            productID = Integer.valueOf(productIDBox.getText());
+        }
+        if(!inventoryIDBox.getText().isEmpty())
+        {
+            inventoryID = Integer.valueOf(inventoryIDBox.getText());
+        }
         InventoryItem inventoryItem;
         InventoryItem[] inventoryItemList;
 
-        if(productID == -1)
+        if(productID == -1 && inventoryID == -1)
         {
-            //error
-
+            InventoryItem[] allItems = InventoryManager.GetInventoryItems();
+            for (int i = 0; i < allItems.length; ++i) {
+                addItem(allItems[i]);
+            }
         }
         else if(inventoryID == -1)
         {
             inventoryItemList = InventoryManager.SearchForInventoryItem(productID);
-
+            for (InventoryItem II : inventoryItemList)
+            {
+                addItem(II);
+            }
             //If inventoryItemList is found
         }
         else
         {
             inventoryItem = InventoryManager.SearchForInventoryItem(productID, inventoryID);
-
+            addItem(inventoryItem);
             //If inventoryItme is found
         }
         
+    }
+    void addItem(InventoryItem item)
+    {
+        ObservableList<InventoryItem> inventoryItem = inventoryList.getItems();
+        inventoryItem.add(item);
+        inventoryList.setItems(inventoryItem);
     }
 }
