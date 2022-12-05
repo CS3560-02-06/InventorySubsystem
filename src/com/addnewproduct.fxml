@@ -33,7 +33,9 @@
                <items>
                   <MenuItem fx:id="searchProduct" mnemonicParsing="false" onAction="#SelectSearchProduct" text="Product Item" />
                   <MenuItem fx:id="searchInventory" mnemonicParsing="false" onAction="#SelectSearchInventory" text="Inventory Item" />
-                  <MenuItem fx:id="searchSupplier" mnemonicParsing="false" onAction="#SelectSearchSupplier" text="Supplier ID" />
+                  <MenuItem fx:id="searchCategory" mnemonicParsing="false" onAction="#SelectSearchCategory" text="Category" />
+                  <MenuItem fx:id="searchSupplier" mnemonicParsing="false" onAction="#SelectSearchSupplier" text="Supplier" />
+                  <MenuItem fx:id="searchLocation" mnemonicParsing="false" onAction="#SelectSearchLocation" text="Location" />
                </items>
             </Menu>
          </menus>
