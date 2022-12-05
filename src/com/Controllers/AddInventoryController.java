@@ -175,6 +175,17 @@ public class AddInventoryController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchSupplier.fxml");
     }
+
+    public void SelectSearchCategory(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchCategory.fxml");
+    }
+    
+    public void SelectSearchLocation(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchLocation.fxml");
+    }
+    
     public void add(MouseEvent event) 
     {
         if(productIDBox.getValue() == null || priceBox.getText().isEmpty() || amountBox.getText().isEmpty() || locationBox.getValue() == null
