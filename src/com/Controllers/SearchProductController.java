@@ -2,6 +2,9 @@ package com.Controllers;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
+
+import javax.lang.model.util.ElementScanner6;
+
 import java.net.URL;
 
 import com.InventoryManager;
@@ -21,7 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
 
-public class SearchProductController {
+public class SearchProductController implements Initializable{
 
     @FXML
     private MenuItem addProduct;
@@ -61,25 +64,19 @@ public class SearchProductController {
     @FXML
     private TableColumn<ProductItem, String> description;
     
-    // @Override
-    // public void initialize(URL url, ResourceBundle resourceBundle){
-    //     productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
-    //     name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
-    //     categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
-    //     supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
-    //     description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
-    //     supplierBox.getItems().addAll(1,2,3);
-    //     categoryBox.getItems().addAll(1,2,3);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
+        name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
+        categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
+        supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
+        description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
 
-    //     ProductItem[] allItems = InventoryManager.GetProductItems();
-    //     for (int i = 0; i < allItems.length; ++i) {
-    //         addItem(allItems[i]);
-    //         if(i == allItems.length-1)
-    //         {
-    //             indexToInsert = allItems[i].getProductID() + 1;
-    //         }
-    //     }
-    // }
+        ProductItem[] allItems = InventoryManager.GetProductItems();
+        for (int i = 0; i < allItems.length; ++i) {
+            addItem(allItems[i]);
+        }
+    }
 
     public SearchProductController() {
 
@@ -106,29 +103,46 @@ public class SearchProductController {
     }
 
     public void search(MouseEvent event) {
+        productList.getItems().clear();
         int productID = -1;
         String productName = "";
-        productID = Integer.valueOf(productIDBox.getText());
+        if(!productIDBox.getText().isEmpty())
+        {
+            productID = Integer.valueOf(productIDBox.getText());
+        }
         productName = nameBox.getText();
 
         ProductItem productItem;
         ProductItem[] productItemList;
-
         if(productID != -1)
         {
             productItem = InventoryManager.SearchForProduct(productID);
-
+            addItem(productItem);
             //If productItem is found
 
         }
-        else if(productName != "")
+        else if(!nameBox.getText().isEmpty())
         {
             productItemList = InventoryManager.SearchForProduct(productName);
-
+            for (ProductItem PI : productItemList) {
+                addItem(PI);
+            }
             //If productItemList is found
         }
-        // else
-        //     print out error?
+        else
+        {
+            ProductItem[] allItems = InventoryManager.GetProductItems();
+            for (int i = 0; i < allItems.length; ++i) {
+                addItem(allItems[i]);
+            }
+        }
         
+    }
+    
+    void addItem(ProductItem item)
+    {
+        ObservableList<ProductItem> productItems = productList.getItems();
+        productItems.add(item);
+        productList.setItems(productItems);
     }
 }
