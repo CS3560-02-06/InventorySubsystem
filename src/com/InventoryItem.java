@@ -2,8 +2,6 @@ package com;
 
 import java.sql.Date;
 
-import javafx.scene.control.TableColumn;
-
 public class InventoryItem
 {
    int productID;

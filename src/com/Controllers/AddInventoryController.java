@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.net.URL;
 
 import com.InventoryManager;
+import com.Location;
 import com.InventoryItem;
 
 import javafx.collections.ObservableList;
@@ -66,7 +67,7 @@ public class AddInventoryController implements Initializable{
     private TableColumn<InventoryItem, Integer> size;
 
     @FXML
-    private ChoiceBox<Integer> locationBox;
+    private ChoiceBox<String> locationBox;
     @FXML
     private TextField amountBox;
     @FXML
@@ -79,6 +80,7 @@ public class AddInventoryController implements Initializable{
     private TextField sizeBox;
 
     private int indexToInsert = 1;
+    private Location[] locations;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -89,7 +91,10 @@ public class AddInventoryController implements Initializable{
         locationID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Location"));
         productID.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ProductID"));
         size.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("Size"));
-        locationBox.getItems().addAll(1,2,3);
+        locations = InventoryManager.GetLocations();
+        for (Location location : locations) {
+            locationBox.getItems().add(location.GetName());
+        }
 
         InventoryItem[] allItems = InventoryManager.GetInventoryItems();
         for (int i = 0; i < allItems.length; ++i) {
@@ -139,9 +144,10 @@ public class AddInventoryController implements Initializable{
                 }
             }
         }
+        int location = InventoryManager.FindLocation(locations, locationBox.getValue());
         InventoryItem inventoryItem = new InventoryItem(productID, indexToInsert,
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), temp, temp, locationBox.getValue());
+                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), temp, temp, location);
         addItem(inventoryItem);
         InventoryManager.AddInventoryItem(inventoryItem);
         ++indexToInsert;
@@ -174,9 +180,10 @@ public class AddInventoryController implements Initializable{
         Date temp = new Date(1, 1, 1);
 
         // Update item in database
+        int location = InventoryManager.FindLocation(locations, locationBox.getValue());
         InventoryItem updateItem = new InventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(),
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Double.parseDouble(sizeBox.getText()),colorBox.getText(), temp, temp, locationBox.getValue());
+                                                    Double.parseDouble(sizeBox.getText()),colorBox.getText(), temp, temp, location);
     
         InventoryManager.UpdateInventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(), updateItem);
  
