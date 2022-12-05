@@ -12,6 +12,7 @@ import com.InventoryItem;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
@@ -20,9 +21,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView.EditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.fxml.Initializable;
 import java.time.*;
 import java.time.temporal.*;
@@ -84,6 +89,9 @@ public class AddInventoryController implements Initializable{
     private DatePicker rDatePicker;
     @FXML
     private DatePicker eDatePicker;
+
+    @FXML
+    private AnchorPane myAnchorPane;
 
     private int indexToInsert = 1;
     private Location[] locations;
@@ -155,7 +163,21 @@ public class AddInventoryController implements Initializable{
         m.ChangeScene("com/SearchInventory.fxml");
     }
 
-    public void add(MouseEvent event) {
+    public void add(MouseEvent event) 
+    {
+        if(productIDBox.getValue().isEmpty() || priceBox.getText().isEmpty() || amountBox.getText().isEmpty() || locationBox.getValue().isEmpty()
+            || rDatePicker.getValue() == null)
+        {
+            Stage stage = (Stage) myAnchorPane.getScene().getWindow();
+            Alert errorAlert = new Alert(AlertType.ERROR);
+            errorAlert.initModality(Modality.APPLICATION_MODAL);
+            errorAlert.initOwner(stage);
+
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Please...(do something)");
+            errorAlert.showAndWait();
+        }
+
         int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)

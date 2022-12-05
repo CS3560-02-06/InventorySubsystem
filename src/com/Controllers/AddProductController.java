@@ -12,14 +12,19 @@ import com.Supplier;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
 
@@ -78,6 +83,9 @@ public class AddProductController implements Initializable{
 
     @FXML
     private ChoiceBox<String> categoryBox;
+
+    @FXML
+    private AnchorPane myAnchorPane;
 
     private int indexToInsert = 1;
     private Supplier[] suppliers;
@@ -153,7 +161,20 @@ public class AddProductController implements Initializable{
         supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).GetName());
         descriptionBox.setText(clickedItem.getDesc());
     }
-    public void add(MouseEvent event) {
+    public void add(MouseEvent event) 
+    {
+        if(nameBox.getText().isEmpty() || categoryBox.getValue().isEmpty() || supplierBox.getValue().isEmpty())
+        {
+            Stage stage = (Stage) myAnchorPane.getScene().getWindow();
+            Alert errorAlert = new Alert(AlertType.ERROR);
+            errorAlert.initModality(Modality.APPLICATION_MODAL);
+            errorAlert.initOwner(stage);
+
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Please...(do something)");
+            errorAlert.showAndWait();
+        }
+        
         int category = InventoryManager.FindCategory(categories, categoryBox.getValue());
         int supplier = InventoryManager.FindSupplier(suppliers, supplierBox.getValue());
         ProductItem productItem = new ProductItem(indexToInsert, nameBox.getText(), category, supplier, descriptionBox.getText());
