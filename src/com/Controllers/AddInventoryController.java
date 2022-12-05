@@ -20,6 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ListView.EditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.Initializable;
@@ -121,6 +122,21 @@ public class AddInventoryController implements Initializable{
         }
     }
 
+    public void select(MouseEvent event)
+    {   
+        InventoryItem clickedItem = inventoryList.getSelectionModel().getSelectedItem();
+        if(clickedItem == null) {
+            return;
+        }
+        productIDBox.setValue(InventoryManager.SearchForProduct(clickedItem.getProductID()).getName());
+        locationBox.setValue(InventoryManager.SearchForLocation(clickedItem.getLocation()).GetName());
+        priceBox.setText(String.valueOf(clickedItem.getPrice()));
+        sizeBox.setText(String.valueOf(clickedItem.getSize()));
+        amountBox.setText(String.valueOf(clickedItem.getAmount()));
+        colorBox.setText(clickedItem.getColor());
+        rDatePicker.setValue(clickedItem.getRecDate());
+        eDatePicker.setValue(clickedItem.getExpDate());
+    }
     
     public AddInventoryController() {
 
@@ -163,11 +179,20 @@ public class AddInventoryController implements Initializable{
             }
         }
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
+        double size = -1;
+        if(!sizeBox.getText().isEmpty())
+        {
+            size = Double.parseDouble(sizeBox.getText());
+        }
         LocalDate rDate = rDatePicker.getValue();
         LocalDate eDate = eDatePicker.getValue();
+        if(eDate == null)
+        {
+            eDate = LocalDate.of(1, 1, 1);
+        }
         InventoryItem inventoryItem = new InventoryItem(productID, indexToInsert,
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), rDate, eDate, location);
+                                                    size, colorBox.getText(), rDate, eDate, location);
         addItem(inventoryItem);
         InventoryManager.AddInventoryItem(inventoryItem);
         ++indexToInsert;
