@@ -39,12 +39,12 @@ public class guitestController {
 
     public void SelectInventoryItem(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
-        m.ChangeScene("src/com/addinventoryproduct.fxml");
+        m.ChangeScene("src/com/addnewInventory.fxml");
     }
     
     public void SelectSearchProduct(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
-        m.ChangeScene("src/com/SearchPrudoct.fxml");
+        m.ChangeScene("src/com/SearchProduct.fxml");
     }
 
     public void SelectSearchInventory(ActionEvent event) throws IOException {
