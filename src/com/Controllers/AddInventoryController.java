@@ -42,6 +42,10 @@ public class AddInventoryController implements Initializable{
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
+    private MenuItem searchSupplier;
 
 
     @FXML
@@ -110,7 +114,7 @@ public class AddInventoryController implements Initializable{
         expirationDate.setCellValueFactory(new PropertyValueFactory<InventoryItem, LocalDate>("ExpDate"));
         locations = InventoryManager.GetLocations();
         for (Location location : locations) {
-            locationBox.getItems().add(location.GetName());
+            locationBox.getItems().add(location.getName());
         }
         products = InventoryManager.GetProductItems();
         for (ProductItem product : products) {
@@ -130,7 +134,7 @@ public class AddInventoryController implements Initializable{
             return;
         }
         productIDBox.setValue(InventoryManager.SearchForProduct(clickedItem.getProductID()).getName());
-        locationBox.setValue(InventoryManager.SearchForLocation(clickedItem.getLocation()).GetName());
+        locationBox.setValue(InventoryManager.SearchForLocation(clickedItem.getLocation()).getName());
         priceBox.setText(String.valueOf(clickedItem.getPrice()));
         sizeBox.setText(String.valueOf(clickedItem.getSize()));
         amountBox.setText(String.valueOf(clickedItem.getAmount()));
@@ -162,10 +166,18 @@ public class AddInventoryController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+    public void SelectUserGuide(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/homePage.fxml");
+    }
 
+    public void SelectSearchSupplier(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchSupplier.fxml");
+    }
     public void add(MouseEvent event) 
     {
-        if(productIDBox.getValue().isEmpty() || priceBox.getText().isEmpty() || amountBox.getText().isEmpty() || locationBox.getValue().isEmpty()
+        if(productIDBox.getValue() == null || priceBox.getText().isEmpty() || amountBox.getText().isEmpty() || locationBox.getValue() == null
             || rDatePicker.getValue() == null)
         {
             Stage stage = (Stage) myAnchorPane.getScene().getWindow();
@@ -176,8 +188,8 @@ public class AddInventoryController implements Initializable{
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
+            return;
         }
-
         int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)

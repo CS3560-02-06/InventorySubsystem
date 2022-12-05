@@ -39,6 +39,10 @@ public class AddProductController implements Initializable{
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
+    private MenuItem searchSupplier;
 
     @FXML
     private Button addButton;
@@ -71,12 +75,6 @@ public class AddProductController implements Initializable{
     @FXML
     private TextField nameBox;
 
-    // @FXML
-    // private TextField supplierBox;
-
-    // @FXML
-    // private TextField categoryBox;
-
 
     @FXML
     private ChoiceBox<String> supplierBox;
@@ -101,11 +99,11 @@ public class AddProductController implements Initializable{
         suppliers = InventoryManager.GetSuppliers();
         for (Supplier supplier : suppliers)
         {
-            supplierBox.getItems().add(supplier.GetName());
+            supplierBox.getItems().add(supplier.getName());
         }
         categories = InventoryManager.GetCategories();
         for (Category category : categories) {
-            categoryBox.getItems().addAll(category.GetName());
+            categoryBox.getItems().addAll(category.getName());
         }
 
         ProductItem[] allItems = InventoryManager.GetProductItems();
@@ -142,6 +140,17 @@ public class AddProductController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+
+    public void SelectUserGuide(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/homePage.fxml");
+    }
+
+    public void SelectSearchSupplier(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchSupplier.fxml");
+    }
+    
     public void selectCategory()
     {
 
@@ -157,13 +166,13 @@ public class AddProductController implements Initializable{
             return;
         }
         nameBox.setText(clickedItem.getName());
-        categoryBox.setValue(InventoryManager.SearchForCategory(clickedItem.getCategory()).GetName());
-        supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).GetName());
+        categoryBox.setValue(InventoryManager.SearchForCategory(clickedItem.getCategory()).getName());
+        supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).getName());
         descriptionBox.setText(clickedItem.getDesc());
     }
     public void add(MouseEvent event) 
     {
-        if(nameBox.getText().isEmpty() || categoryBox.getValue().isEmpty() || supplierBox.getValue().isEmpty())
+        if(nameBox.getText().isEmpty() || categoryBox.getValue() == null || supplierBox.getValue() == null)
         {
             Stage stage = (Stage) myAnchorPane.getScene().getWindow();
             Alert errorAlert = new Alert(AlertType.ERROR);
@@ -173,6 +182,7 @@ public class AddProductController implements Initializable{
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
+            return;
         }
         
         int category = InventoryManager.FindCategory(categories, categoryBox.getValue());

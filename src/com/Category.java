@@ -11,11 +11,11 @@ public class Category
       name = newName;
    }
    
-   public int GetCategoryID()
+   public int getCategoryID()
    {
       return categoryID;
    }
-   public String GetName()
+   public String getName()
    {
       return name;
    }

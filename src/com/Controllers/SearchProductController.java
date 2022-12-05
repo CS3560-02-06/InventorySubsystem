@@ -131,7 +131,6 @@ public class SearchProductController implements Initializable{
             errorAlert.showAndWait();
             return;
         }
-        
         productList.getItems().clear();
         int productID = -1;
         String productName = "";

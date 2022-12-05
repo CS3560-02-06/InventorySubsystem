@@ -15,19 +15,19 @@ public class Supplier
       email = newEmail;
    }
 
-   public int GetSupplierID()
+   public int getSupplierID()
    {
       return supplierID;
    }
-   public String GetName()
+   public String getName()
    {
       return name;
    }
-   public String GetPhone()
+   public String getPhone()
    {
       return phone;
    }
-   public String GetEmail()
+   public String getEmail()
    {
       return email;
    }

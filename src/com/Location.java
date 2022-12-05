@@ -11,12 +11,12 @@ public class Location
       name = newName;
    }
 
-   public int GetLocationID()
+   public int getLocation()
    {
       return locationID;
    }
    
-   public String GetName()
+   public String getName()
    {
       return name;
    }
