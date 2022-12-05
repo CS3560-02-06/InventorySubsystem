@@ -47,30 +47,30 @@ public class InventoryManager extends Application
 
          // TEST STUFF REMOVE LATER
 
-         ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
-         AddProductItem(newP);
-         newP = new ProductItem(2, "among us", 1, 2, "gama");
-         AddProductItem(newP);
-         newP = new ProductItem(3, "among us", 1, 2, "gama");
-         AddProductItem(newP);
-         LocalDate newDate = LocalDate.of(1, 1, 1);
-         LocalDate twoDate = LocalDate.of(7, 7, 7);
-         InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, twoDate, 0);
-         AddInventoryItem(newItem);
-         newDate = LocalDate.of(5, 5, 5);
-         twoDate = LocalDate.of(9, 9, 9);
-         InventoryItem newerItem = new InventoryItem(2, 4, 60, 2, 4354, "RED", newDate, newDate, 3);
-         AddInventoryItem(newerItem);
-         newItem = new InventoryItem(3, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
-         AddInventoryItem(newItem);
-         ProductItem pi = SearchForProduct(1);
-         System.out.println(pi.getName());
-         ProductItem[] pis = SearchForProduct("among us");
-         System.out.println(pis.length);
-         InventoryItem II = SearchForInventoryItem(1, 1);
-         System.out.println(II.getPrice());
-         InventoryItem[] IIs = SearchForInventoryItem(1);
-         System.out.println(IIs.length);
+         // ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
+         // AddProductItem(newP);
+         // newP = new ProductItem(2, "among us", 1, 2, "gama");
+         // AddProductItem(newP);
+         // newP = new ProductItem(3, "among us", 1, 2, "gama");
+         // AddProductItem(newP);
+         // LocalDate newDate = LocalDate.of(1, 1, 1);
+         // LocalDate twoDate = LocalDate.of(7, 7, 7);
+         // InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, twoDate, 0);
+         // AddInventoryItem(newItem);
+         // newDate = LocalDate.of(5, 5, 5);
+         // twoDate = LocalDate.of(9, 9, 9);
+         // InventoryItem newerItem = new InventoryItem(2, 4, 60, 2, 4354, "RED", newDate, newDate, 3);
+         // AddInventoryItem(newerItem);
+         // newItem = new InventoryItem(3, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
+         // AddInventoryItem(newItem);
+         // ProductItem pi = SearchForProduct(1);
+         // System.out.println(pi.getName());
+         // ProductItem[] pis = SearchForProduct("among us");
+         // System.out.println(pis.length);
+         // InventoryItem II = SearchForInventoryItem(1, 1);
+         // System.out.println(II.getPrice());
+         // InventoryItem[] IIs = SearchForInventoryItem(1);
+         // System.out.println(IIs.length);
 
          // TEST STUFF REMOVE LATER
 
