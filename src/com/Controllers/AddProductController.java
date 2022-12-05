@@ -88,6 +88,7 @@ public class AddProductController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        // System.out.println("print");
         productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
         name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
         categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));

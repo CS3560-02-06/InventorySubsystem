@@ -80,7 +80,7 @@ public class InventoryManager extends Application
    @Override
    public void start(Stage primaryStage) throws Exception {
        stg = primaryStage;
-       File f = new File("src/com/homePage.fxml");
+       File f = new File("src/com/addnewproduct.fxml");
        Parent root = FXMLLoader.load(f.toURI().toURL());
 
        primaryStage.setScene(new Scene(root));
@@ -89,7 +89,7 @@ public class InventoryManager extends Application
    }
 
    public void ChangeScene(String fxml) throws IOException {
-       Parent pane = FXMLLoader.load(getClass().getResource("/"+fxml));
+       Parent pane = FXMLLoader.load(getClass().getClassLoader().getResource("/"+fxml));
        stg.getScene().setRoot(pane);
    }
 
