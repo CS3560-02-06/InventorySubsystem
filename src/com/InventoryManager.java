@@ -479,8 +479,7 @@ public class InventoryManager extends Application
       Vector<ProductItem> productItems = new Vector<ProductItem>();
       ResultSet rs;
 
-      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name = \"" + name + "\"");
-
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name LIKE \"%" + name + "%\"");
       try
       {
          if(!rs.isBeforeFirst()){return null;}
