@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 import java.net.URL;
 
+import com.Category;
 import com.InventoryManager;
 import com.ProductItem;
+import com.Supplier;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -79,12 +81,14 @@ public class AddProductController implements Initializable{
 
 
     @FXML
-    private ChoiceBox<Integer> supplierBox;
+    private ChoiceBox<String> supplierBox;
 
     @FXML
-    private ChoiceBox<Integer> categoryBox;
+    private ChoiceBox<String> categoryBox;
 
     private int indexToInsert = 1;
+    private Supplier[] suppliers;
+    private Category[] categories;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -93,8 +97,15 @@ public class AddProductController implements Initializable{
         categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
         supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
         description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
-        supplierBox.getItems().addAll(1,2,3);
-        categoryBox.getItems().addAll(1,2,3);
+        suppliers = InventoryManager.GetSuppliers();
+        for (Supplier supplier : suppliers)
+        {
+            supplierBox.getItems().add(supplier.GetName());
+        }
+        categories = InventoryManager.GetCategories();
+        for (Category category : categories) {
+            categoryBox.getItems().addAll(category.GetName());
+        }
 
         ProductItem[] allItems = InventoryManager.GetProductItems();
         for (int i = 0; i < allItems.length; ++i) {
@@ -139,7 +150,9 @@ public class AddProductController implements Initializable{
 
     }
     public void add(MouseEvent event) {
-        ProductItem productItem = new ProductItem(indexToInsert, nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
+        int category = InventoryManager.FindCategory(categories, categoryBox.getValue());
+        int supplier = InventoryManager.FindSupplier(suppliers, supplierBox.getValue());
+        ProductItem productItem = new ProductItem(indexToInsert, nameBox.getText(), category, supplier, descriptionBox.getText());
         addItem(productItem);
         InventoryManager.AddProductItem(productItem);
         ++indexToInsert;
@@ -156,7 +169,9 @@ public class AddProductController implements Initializable{
        }
        
        // Update item in database
-       ProductItem updatedItem = new ProductItem(clickedItem.getProductID(), nameBox.getText(), categoryBox.getValue(), supplierBox.getValue(), descriptionBox.getText());
+        int category = InventoryManager.FindCategory(categories, categoryBox.getValue());
+        int supplier = InventoryManager.FindSupplier(suppliers, supplierBox.getValue());
+       ProductItem updatedItem = new ProductItem(clickedItem.getProductID(), nameBox.getText(), category, supplier, descriptionBox.getText());
        InventoryManager.UpdateProductItem(clickedItem.getProductID(), updatedItem);
 
        // Update item render
