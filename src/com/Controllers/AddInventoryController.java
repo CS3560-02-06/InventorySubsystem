@@ -6,6 +6,7 @@ import java.net.URL;
 
 import com.InventoryManager;
 import com.Location;
+import com.ProductItem;
 import com.InventoryItem;
 
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ListView.EditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.Initializable;
@@ -75,7 +77,7 @@ public class AddInventoryController implements Initializable{
     @FXML
     private TextField priceBox;
     @FXML
-    private TextField productIDBox;
+    private ChoiceBox<String> productIDBox;
     @FXML
     private TextField sizeBox;
     @FXML
@@ -85,6 +87,7 @@ public class AddInventoryController implements Initializable{
 
     private int indexToInsert = 1;
     private Location[] locations;
+    private ProductItem[] products;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -101,6 +104,10 @@ public class AddInventoryController implements Initializable{
         for (Location location : locations) {
             locationBox.getItems().add(location.GetName());
         }
+        products = InventoryManager.GetProductItems();
+        for (ProductItem product : products) {
+            productIDBox.getItems().addAll(product.getName());
+        }
 
         InventoryItem[] allItems = InventoryManager.GetInventoryItems();
         for (int i = 0; i < allItems.length; ++i) {
@@ -108,6 +115,21 @@ public class AddInventoryController implements Initializable{
         }
     }
 
+    public void select(MouseEvent event)
+    {   
+        InventoryItem clickedItem = inventoryList.getSelectionModel().getSelectedItem();
+        if(clickedItem == null) {
+            return;
+        }
+        productIDBox.setValue(InventoryManager.SearchForProduct(clickedItem.getProductID()).getName());
+        locationBox.setValue(InventoryManager.SearchForLocation(clickedItem.getLocation()).GetName());
+        priceBox.setText(String.valueOf(clickedItem.getPrice()));
+        sizeBox.setText(String.valueOf(clickedItem.getSize()));
+        amountBox.setText(String.valueOf(clickedItem.getAmount()));
+        colorBox.setText(clickedItem.getColor());
+        rDatePicker.setValue(clickedItem.getRecDate());
+        eDatePicker.setValue(clickedItem.getExpDate());
+    }
     
     public AddInventoryController() {
 
@@ -134,7 +156,7 @@ public class AddInventoryController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-        int productID = Integer.parseInt(productIDBox.getText());
+        int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)
         {
@@ -150,11 +172,20 @@ public class AddInventoryController implements Initializable{
             }
         }
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
+        double size = -1;
+        if(!sizeBox.getText().isEmpty())
+        {
+            size = Double.parseDouble(sizeBox.getText());
+        }
         LocalDate rDate = rDatePicker.getValue();
         LocalDate eDate = eDatePicker.getValue();
+        if(eDate == null)
+        {
+            eDate = LocalDate.of(1, 1, 1);
+        }
         InventoryItem inventoryItem = new InventoryItem(productID, indexToInsert,
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
-                                                    Integer.parseInt(sizeBox.getText()), colorBox.getText(), rDate, eDate, location);
+                                                    size, colorBox.getText(), rDate, eDate, location);
         addItem(inventoryItem);
         InventoryManager.AddInventoryItem(inventoryItem);
         ++indexToInsert;
@@ -169,8 +200,9 @@ public class AddInventoryController implements Initializable{
 
     public void remove(MouseEvent event) {
         int selectedID = inventoryList.getSelectionModel().getSelectedIndex();
+        InventoryItem clickedItem = inventoryList.getSelectionModel().getSelectedItem();
+        InventoryManager.RemoveInventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID());
         inventoryList.getItems().remove(selectedID);
-
     }
         /*
     * When the update button is clicked this method is called
@@ -185,10 +217,11 @@ public class AddInventoryController implements Initializable{
         
         LocalDate rDate = rDatePicker.getValue();
         LocalDate eDate = eDatePicker.getValue();
+        int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
 
         // Update item in database
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
-        InventoryItem updateItem = new InventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(),
+        InventoryItem updateItem = new InventoryItem(productID, clickedItem.getInventoryID(),
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
                                                     Double.parseDouble(sizeBox.getText()),colorBox.getText(), rDate, eDate, location);
     

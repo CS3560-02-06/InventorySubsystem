@@ -142,6 +142,17 @@ public class AddProductController implements Initializable{
     {
 
     }
+    public void select(MouseEvent event)
+    {   
+        ProductItem clickedItem = productList.getSelectionModel().getSelectedItem();
+        if(clickedItem == null) {
+            return;
+        }
+        nameBox.setText(clickedItem.getName());
+        categoryBox.setValue(InventoryManager.SearchForCategory(clickedItem.getCategory()).GetName());
+        supplierBox.setValue(InventoryManager.SearchForSupplier(clickedItem.getBrand()).GetName());
+        descriptionBox.setText(clickedItem.getDesc());
+    }
     public void add(MouseEvent event) {
         int category = InventoryManager.FindCategory(categories, categoryBox.getValue());
         int supplier = InventoryManager.FindSupplier(suppliers, supplierBox.getValue());
@@ -184,6 +195,8 @@ public class AddProductController implements Initializable{
 
     public void remove(MouseEvent event) {
         int selectedID = productList.getSelectionModel().getSelectedIndex();
+        ProductItem clickedItem = productList.getSelectionModel().getSelectedItem();
+        InventoryManager.RemoveProductItem(clickedItem.getProductID());
         productList.getItems().remove(selectedID);
 
     }

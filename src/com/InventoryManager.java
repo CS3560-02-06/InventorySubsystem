@@ -13,6 +13,7 @@ import java.util.*;
 import javax.annotation.processing.SupportedOptions;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 // import javafx.application.Application;
 // import javafx.fxml.FXMLLoader;
@@ -46,27 +47,30 @@ public class InventoryManager extends Application
 
          // TEST STUFF REMOVE LATER
 
-         // ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
-         // AddProductItem(newP);
-         // newP = new ProductItem(2, "among us", 1, 2, "gama");
-         // AddProductItem(newP);
-         // newP = new ProductItem(3, "among us", 1, 2, "gama");
-         // AddProductItem(newP);
-         // Date newDate = new Date(1, 1, 1);
-         // InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, newDate, 0);
-         // AddInventoryItem(newItem);
-         // InventoryItem newerItem = new InventoryItem(1, 2, 5.6, 1, 3.5, "RED", newDate, newDate, 0);
-         // UpdateInventoryItem(1, 1, newerItem);
-         // newItem = new InventoryItem(1, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
-         // AddInventoryItem(newItem);
-         // ProductItem pi = SearchForProduct(1);
-         // System.out.println(pi.getName());
-         // ProductItem[] pis = SearchForProduct("among us");
-         // System.out.println(pis.length);
-         // InventoryItem II = SearchForInventoryItem(1, 1);
-         // System.out.println(II.getPrice());
-         // InventoryItem[] IIs = SearchForInventoryItem(1);
-         // System.out.println(IIs.length);
+         ProductItem newP = new ProductItem(1, "sdfsdf", 1, 2, "gogo");
+         AddProductItem(newP);
+         newP = new ProductItem(2, "among us", 1, 2, "gama");
+         AddProductItem(newP);
+         newP = new ProductItem(3, "among us", 1, 2, "gama");
+         AddProductItem(newP);
+         LocalDate newDate = LocalDate.of(1, 1, 1);
+         LocalDate twoDate = LocalDate.of(7, 7, 7);
+         InventoryItem newItem = new InventoryItem(1, 1, 5.5, 1, 3.5, "Blue", newDate, twoDate, 0);
+         AddInventoryItem(newItem);
+         newDate = LocalDate.of(5, 5, 5);
+         twoDate = LocalDate.of(9, 9, 9);
+         InventoryItem newerItem = new InventoryItem(2, 4, 60, 2, 4354, "RED", newDate, newDate, 3);
+         AddInventoryItem(newerItem);
+         newItem = new InventoryItem(3, 1, 100, 1, 3.5, "Yellow", newDate, newDate, 0);
+         AddInventoryItem(newItem);
+         ProductItem pi = SearchForProduct(1);
+         System.out.println(pi.getName());
+         ProductItem[] pis = SearchForProduct("among us");
+         System.out.println(pis.length);
+         InventoryItem II = SearchForInventoryItem(1, 1);
+         System.out.println(II.getPrice());
+         InventoryItem[] IIs = SearchForInventoryItem(1);
+         System.out.println(IIs.length);
 
          // TEST STUFF REMOVE LATER
 
@@ -416,9 +420,9 @@ public class InventoryManager extends Application
     * Removes an existing ProductItem from the database.
     * @param inventoryID The ID of the item to remove.
     */
-   static public void RemoveInventoryItem(int inventoryID)
+   static public void RemoveInventoryItem(int productID, int inventoryID)
    {
-      String sql = "DELETE FROM `inventory_items` WHERE `inventory_id` = " + inventoryID;
+      String sql = "DELETE FROM `inventory_items` WHERE (`product_id_FK` = " + productID + " AND `inventory_id` = " + inventoryID + ")";
       runUpdateSqlQuery(sql);
    }
    /**
@@ -479,8 +483,7 @@ public class InventoryManager extends Application
       Vector<ProductItem> productItems = new Vector<ProductItem>();
       ResultSet rs;
 
-      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name = \"" + name + "\"");
-
+      rs = runSqlQuery("SELECT * FROM product_items WHERE product_name LIKE \"%" + name + "%\"");
       try
       {
          if(!rs.isBeforeFirst()){return null;}
@@ -553,6 +556,84 @@ public class InventoryManager extends Application
          Object[] objArray = inventoryItems.toArray();
          InventoryItem[] finalResult = Arrays.copyOf(objArray, objArray.length, InventoryItem[].class);
          return finalResult;
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
+   }
+   /**
+   * Searches for a specific Supplier in the database.
+   * @param ID The ID of the Supplier to search for.
+   */
+   static public Supplier SearchForSupplier(int ID)
+   {
+      Supplier supplier;
+      ResultSet rs;
+
+      rs = runSqlQuery("SELECT * FROM suppliers WHERE supplier_id = " + ID);
+
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         supplier = new Supplier(ID, rs.getString("supplier_name"), rs.getString("phone"), rs.getString("email"));
+         return supplier;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
+   }
+   /**
+   * Searches for a specific Category in the database.
+   * @param ID The ID of the Category to search for.
+   */
+   static public Category SearchForCategory(int ID)
+   {
+      Category category;
+      ResultSet rs;
+
+      rs = runSqlQuery("SELECT * FROM categories WHERE category_id = " + ID);
+
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         category = new Category(ID, rs.getString("category_name"));
+         return category;
+                  
+      }
+      catch (Exception e)
+      {
+         System.err.println("Got an exception! ");
+         System.err.println(e.getMessage());
+      }
+      return null;
+   }
+   /**
+   * Searches for a specific Location in the database.
+   * @param ID The ID of the Location to search for.
+   */
+   static public Location SearchForLocation(int ID)
+   {
+      Location location;
+      ResultSet rs;
+
+      rs = runSqlQuery("SELECT * FROM locations WHERE location_id = " + ID);
+
+      try
+      {
+         if(!rs.isBeforeFirst()){return null;}
+         rs.next();
+         location = new Location(ID, rs.getString("location_name"));
+         return location;
+                  
       }
       catch (Exception e)
       {
