@@ -191,6 +191,8 @@ public class AddProductController implements Initializable{
 
     public void remove(MouseEvent event) {
         int selectedID = productList.getSelectionModel().getSelectedIndex();
+        ProductItem clickedItem = productList.getSelectionModel().getSelectedItem();
+        InventoryManager.RemoveProductItem(clickedItem.getProductID());
         productList.getItems().remove(selectedID);
 
     }
