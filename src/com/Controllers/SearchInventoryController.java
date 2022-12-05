@@ -145,6 +145,7 @@ public class SearchInventoryController implements Initializable{
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
+            return;
         }
 
         if(!inventoryIDBox.getText().isEmpty())

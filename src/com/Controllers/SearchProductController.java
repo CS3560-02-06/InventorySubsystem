@@ -129,6 +129,7 @@ public class SearchProductController implements Initializable{
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
+            return;
         }
         
         productList.getItems().clear();
