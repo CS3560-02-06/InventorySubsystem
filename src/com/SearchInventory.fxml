@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="563.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.AddProductController">
+<VBox prefHeight="563.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.SearchInventoryController">
    <children>
       <MenuBar prefHeight="29.0" prefWidth="593.0" VBox.vgrow="NEVER">
          <menus>
