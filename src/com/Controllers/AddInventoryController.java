@@ -169,7 +169,6 @@ public class AddInventoryController implements Initializable{
             System.out.println("Please select an item"); // Add error message here
             return;
         }
-        System.out.println("\n\n\n\nhello");
         
         Date temp = new Date(1, 1, 1);
 
