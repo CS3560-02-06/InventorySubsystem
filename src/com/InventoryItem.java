@@ -2,6 +2,8 @@ package com;
 
 import java.sql.Date;
 
+import javafx.scene.control.TableColumn;
+
 public class InventoryItem
 {
    int productID;
@@ -13,6 +15,7 @@ public class InventoryItem
    Date receiptDate;
    Date expirationDate;
    int locationID;
+
 
    // Constructor
    public InventoryItem(int newPID, int newIID, double newPrice, int newAmount, double newSize, String newColor, Date newRDate, Date newEDate, int newLoc)
@@ -28,7 +31,9 @@ public class InventoryItem
       locationID = newLoc;
    }
 
-   // Getters
+
+
+// Getters
    public int getProductID(){return productID;}
    public int getInventoryID(){return inventoryID;}
    public double getPrice(){return price;}
@@ -42,9 +47,9 @@ public class InventoryItem
    // Setters
    public void setProductID(int newID){productID = newID;}
    public void setInventoryID(int newID){inventoryID = newID;}
-   public void setPrice(int newPrice){price = newPrice;}
+   public void setPrice(double newPrice){price = newPrice;}
    public void setAmount(int newAmount){amountInStock = newAmount;}
-   public void setSize(int newSize){size = newSize;}
+   public void setSize(double newSize){size = newSize;}
    public void setColor(String newColor){color = newColor;}
    public void setRecDate(Date newDate){receiptDate = newDate;}
    public void setExpDate(Date newDate){expirationDate = newDate;}

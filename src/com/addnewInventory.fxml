@@ -85,6 +85,11 @@
             <Label layoutX="320.0" layoutY="359.0" text="Color  *" />
             <TextField fx:id="colorBox" layoutX="320.0" layoutY="380.0" />
             <ChoiceBox fx:id="locationBox" layoutX="320.0" layoutY="437.0" prefHeight="26.0" prefWidth="161.0" />
+            <Button fx:id="updateButton" layoutX="238.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#updateInventory" prefHeight="38.0" prefWidth="96.0" style="-fx-background-color: green;" text="Update" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>
