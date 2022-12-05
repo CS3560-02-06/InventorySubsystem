@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+
+import javax.annotation.processing.SupportedOptions;
+
 import java.sql.Date;
 
 // import javafx.application.Application;
@@ -283,6 +286,90 @@ public class InventoryManager extends Application
       return null;
    }
    /**
+    * Finds and returns every Supplier in the database.
+    */
+   static public Supplier[] GetSuppliers()
+   {
+      try{
+         String sql = "SELECT * FROM suppliers";
+         ResultSet rs = runSqlQuery(sql);
+
+         rs.last();
+         int rows = rs.getRow();
+         rs.beforeFirst();
+         Supplier[] result = new Supplier[rows];
+         int currRow = 0;
+         while(rs.next())
+         {
+            Supplier supplier = new Supplier(rs.getInt("supplier_id"), rs.getString("supplier_name"), rs.getString("phone"), rs.getString("email"));
+            result[currRow] = supplier;
+            ++currRow;
+         }
+         return result;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+   /**
+   * Finds and returns every Category in the database.
+   */
+   static public Category[] GetCategories()
+   {
+      try{
+         String sql = "SELECT * FROM categories";
+         ResultSet rs = runSqlQuery(sql);
+
+         rs.last();
+         int rows = rs.getRow();
+         rs.beforeFirst();
+         Category[] result = new Category[rows];
+         int currRow = 0;
+         while(rs.next())
+         {
+            Category category = new Category(rs.getInt("category_id"), rs.getString("category_name"));
+            result[currRow] = category;
+            ++currRow;
+         }
+         return result;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+   /**
+   * Finds and returns every Location in the database.
+   */
+   static public Location[] GetLocations()
+   {
+      try{
+         String sql = "SELECT * FROM locations";
+         ResultSet rs = runSqlQuery(sql);
+
+         rs.last();
+         int rows = rs.getRow();
+         rs.beforeFirst();
+         Location[] result = new Location[rows];
+         int currRow = 0;
+         while(rs.next())
+         {
+            Location location = new Location(rs.getInt("location_id"), rs.getString("location_name"));
+            result[currRow] = location;
+            ++currRow;
+         }
+         return result;
+      }catch(SQLException se) {
+         se.printStackTrace();
+      }catch(Exception e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+   /**
     * Adds a new ProductItem to the database.
     * @param newItem The new item to add.
     */
@@ -473,5 +560,45 @@ public class InventoryManager extends Application
          System.err.println(e.getMessage());
       }
       return null;
+   }
+
+   public static int FindSupplier(Supplier[] suppliers, String target)
+   {
+      int id = -1;
+      for (int i = 0; i < suppliers.length; i++)
+      {
+          if(suppliers[i].GetName().equals(target))
+          {
+              id = suppliers[i].GetSupplierID();
+              break;
+          }
+      }
+      return id;
+   }
+   public static int FindCategory(Category[] categories, String target)
+   {
+      int id = -1;
+      for (int i = 0; i < categories.length; i++)
+      {
+          if(categories[i].GetName().equals(target))
+          {
+              id = categories[i].GetCategoryID();
+              break;
+          }
+      }
+      return id;
+   }
+   public static int FindLocation(Location[] locations, String target)
+   {
+      int id = -1;
+      for (int i = 0; i < locations.length; i++)
+      {
+          if(locations[i].GetName().equals(target))
+          {
+              id = locations[i].GetLocationID();
+              break;
+          }
+      }
+      return id;
    }
 }
