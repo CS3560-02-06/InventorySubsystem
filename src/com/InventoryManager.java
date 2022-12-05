@@ -416,9 +416,9 @@ public class InventoryManager extends Application
     * Removes an existing ProductItem from the database.
     * @param inventoryID The ID of the item to remove.
     */
-   static public void RemoveInventoryItem(int inventoryID)
+   static public void RemoveInventoryItem(int productID, int inventoryID)
    {
-      String sql = "DELETE FROM `inventory_items` WHERE `inventory_id` = " + inventoryID;
+      String sql = "DELETE FROM `inventory_items` WHERE (`product_id_FK` = " + productID + " AND `inventory_id` = " + inventoryID + ")";
       runUpdateSqlQuery(sql);
    }
    /**

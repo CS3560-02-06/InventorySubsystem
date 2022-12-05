@@ -6,6 +6,7 @@ import java.net.URL;
 
 import com.InventoryManager;
 import com.Location;
+import com.ProductItem;
 import com.InventoryItem;
 
 import javafx.collections.ObservableList;
@@ -82,7 +83,7 @@ public class AddInventoryController implements Initializable{
     @FXML
     private TextField priceBox;
     @FXML
-    private TextField productIDBox;
+    private ChoiceBox<String> productIDBox;
     @FXML
     private TextField sizeBox;
     @FXML
@@ -92,6 +93,7 @@ public class AddInventoryController implements Initializable{
 
     private int indexToInsert = 1;
     private Location[] locations;
+    private ProductItem[] products;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -107,6 +109,10 @@ public class AddInventoryController implements Initializable{
         locations = InventoryManager.GetLocations();
         for (Location location : locations) {
             locationBox.getItems().add(location.GetName());
+        }
+        products = InventoryManager.GetProductItems();
+        for (ProductItem product : products) {
+            productIDBox.getItems().addAll(product.getName());
         }
 
         InventoryItem[] allItems = InventoryManager.GetInventoryItems();
@@ -141,7 +147,7 @@ public class AddInventoryController implements Initializable{
     }
 
     public void add(MouseEvent event) {
-        int productID = Integer.parseInt(productIDBox.getText());
+        int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)
         {
@@ -176,8 +182,9 @@ public class AddInventoryController implements Initializable{
 
     public void remove(MouseEvent event) {
         int selectedID = inventoryList.getSelectionModel().getSelectedIndex();
+        InventoryItem clickedItem = inventoryList.getSelectionModel().getSelectedItem();
+        InventoryManager.RemoveInventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID());
         inventoryList.getItems().remove(selectedID);
-
     }
         /*
     * When the update button is clicked this method is called
@@ -192,10 +199,11 @@ public class AddInventoryController implements Initializable{
         
         LocalDate rDate = rDatePicker.getValue();
         LocalDate eDate = eDatePicker.getValue();
+        int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
 
         // Update item in database
         int location = InventoryManager.FindLocation(locations, locationBox.getValue());
-        InventoryItem updateItem = new InventoryItem(clickedItem.getProductID(), clickedItem.getInventoryID(),
+        InventoryItem updateItem = new InventoryItem(productID, clickedItem.getInventoryID(),
                                                     Double.parseDouble(priceBox.getText()), Integer.parseInt(amountBox.getText()),
                                                     Double.parseDouble(sizeBox.getText()),colorBox.getText(), rDate, eDate, location);
     
