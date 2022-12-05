@@ -34,14 +34,11 @@ public class SearchInventoryController implements Initializable{
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
-    // @FXML
-    // private MenuItem removeInventory;
-    // @FXML
-    // private MenuItem removeProduct;
-    // @FXML
-    // private MenuItem updateInventory;
-    // @FXML
-    // private MenuItem updateProduct;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
+    private MenuItem searchSupplier;
+
 
     @FXML
     private Button searchButton;
@@ -115,6 +112,16 @@ public class SearchInventoryController implements Initializable{
     public void SelectSearchInventory(ActionEvent event) throws IOException {
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
+    }
+
+    public void SelectUserGuide(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/homePage.fxml");
+    }
+
+    public void SelectSearchSupplier(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchSupplier.fxml");
     }
 
     public void search(MouseEvent event) {

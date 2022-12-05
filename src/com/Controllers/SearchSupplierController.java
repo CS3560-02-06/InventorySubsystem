@@ -8,7 +8,7 @@ import javax.lang.model.util.ElementScanner6;
 import java.net.URL;
 
 import com.InventoryManager;
-import com.ProductItem;
+import com.Supplier;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn;
 import javafx.fxml.Initializable;
 
-public class SearchProductController implements Initializable{
+public class SearchSupplierController implements Initializable{
 
     @FXML
     private MenuItem producItem;
@@ -44,38 +44,34 @@ public class SearchProductController implements Initializable{
     private Button searchButton;
 
     @FXML
-    private TextField nameBox;
-    @FXML
-    private TextField productIDBox;
+    private TextField supplierIDBox;
+
 
     @FXML
-    private TableView<ProductItem> productList;
+    private TableView<Supplier> supplierList;
     @FXML
-    private TableColumn<ProductItem, Integer> productID;
+    private TableColumn<Supplier, Integer> supplierID;
     @FXML
-    private TableColumn<ProductItem, String> name;
+    private TableColumn<Supplier, String> supplierName;
     @FXML
-    private TableColumn<ProductItem, Integer> categoryID;
+    private TableColumn<Supplier, String> phone;
     @FXML
-    private TableColumn<ProductItem, Integer> supplierID;
-    @FXML
-    private TableColumn<ProductItem, String> description;
-    
+    private TableColumn<Supplier, String> email;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
-        productID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("productID"));
-        name.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("name"));
-        categoryID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("category"));
-        supplierID.setCellValueFactory(new PropertyValueFactory<ProductItem, Integer>("brand"));
-        description.setCellValueFactory(new PropertyValueFactory<ProductItem, String>("desc"));
+        supplierID.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("SupplierID"));
+        supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Name"));
+        phone.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Phone"));
+        email.setCellValueFactory(new PropertyValueFactory<Supplier, String>("Email"));
 
-        ProductItem[] allItems = InventoryManager.GetProductItems();
+        Supplier[] allItems = InventoryManager.GetSuppliers();
         for (int i = 0; i < allItems.length; ++i) {
             addItem(allItems[i]);
         }
     }
 
-    public SearchProductController() {
+    public SearchSupplierController() {
 
     }
 
@@ -110,35 +106,35 @@ public class SearchProductController implements Initializable{
     }
     
     public void search(MouseEvent event) {
-        productList.getItems().clear();
-        int productID = -1;
-        String productName = "";
-        if(!productIDBox.getText().isEmpty())
+        supplierList.getItems().clear();
+        int supplierID = -1;
+        // String supplierName = "";
+        if(!supplierIDBox.getText().isEmpty())
         {
-            productID = Integer.valueOf(productIDBox.getText());
+            supplierID = Integer.valueOf(supplierIDBox.getText());
         }
-        productName = nameBox.getText();
+        // productName = nameBox.getText();
 
-        ProductItem productItem;
-        ProductItem[] productItemList;
-        if(productID != -1)
+        Supplier supplier;
+        // Supplier[] productItemList;
+        if(supplierID != -1)
         {
-            productItem = InventoryManager.SearchForProduct(productID);
-            addItem(productItem);
+            supplier = InventoryManager.SearchForSupplier(supplierID);
+            addItem(supplier);
             //If productItem is found
 
         }
-        else if(!nameBox.getText().isEmpty())
-        {
-            productItemList = InventoryManager.SearchForProduct(productName);
-            for (ProductItem PI : productItemList) {
-                addItem(PI);
-            }
-            //If productItemList is found
-        }
+        // else if(!nameBox.getText().isEmpty())
+        // {
+        //     productItemList = InventoryManager.SearchForProduct(productName);
+        //     for (ProductItem PI : productItemList) {
+        //         addItem(PI);
+        //     }
+        //     //If productItemList is found
+        // }
         else
         {
-            ProductItem[] allItems = InventoryManager.GetProductItems();
+            Supplier[] allItems = InventoryManager.GetSuppliers();
             for (int i = 0; i < allItems.length; ++i) {
                 addItem(allItems[i]);
             }
@@ -146,10 +142,10 @@ public class SearchProductController implements Initializable{
         
     }
     
-    void addItem(ProductItem item)
+    void addItem(Supplier item)
     {
-        ObservableList<ProductItem> productItems = productList.getItems();
-        productItems.add(item);
-        productList.setItems(productItems);
+        ObservableList<Supplier> suppliers = supplierList.getItems();
+        suppliers.add(item);
+        supplierList.setItems(suppliers);
     }
 }

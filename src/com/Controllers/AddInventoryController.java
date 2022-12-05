@@ -42,6 +42,10 @@ public class AddInventoryController implements Initializable{
     private MenuItem searchProduct;
     @FXML
     private MenuItem searchInventory;
+    @FXML
+    private MenuItem userGuide;
+    @FXML
+    private MenuItem searchSupplier;
 
 
     @FXML
@@ -162,7 +166,15 @@ public class AddInventoryController implements Initializable{
         InventoryManager m = new InventoryManager();
         m.ChangeScene("com/SearchInventory.fxml");
     }
+    public void SelectUserGuide(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/homePage.fxml");
+    }
 
+    public void SelectSearchSupplier(ActionEvent event) throws IOException {
+        InventoryManager m = new InventoryManager();
+        m.ChangeScene("com/SearchSupplier.fxml");
+    }
     public void add(MouseEvent event) 
     {
         if(productIDBox.getValue().isEmpty() || priceBox.getText().isEmpty() || amountBox.getText().isEmpty() || locationBox.getValue().isEmpty()
@@ -177,7 +189,6 @@ public class AddInventoryController implements Initializable{
             errorAlert.setContentText("Please...(do something)");
             errorAlert.showAndWait();
         }
-
         int productID = InventoryManager.SearchForProduct(productIDBox.getValue())[0].getProductID();
         InventoryItem[] itemsOnProduct = InventoryManager.SearchForInventoryItem(productID);
         if(itemsOnProduct == null)
